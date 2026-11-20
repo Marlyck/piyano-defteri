@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="Piyano Defteri">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="theme-color" content="#0f0f11">
+<link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" href="icon.png">
 <title>Piyano Defteri</title>
@@ -267,7 +268,7 @@ details.more summary{min-height:44px;display:flex;align-items:center;font-weight
       <p class="msg" id="bk-msg"></p>
     </details>
   </section>
-  <p class="hint" style="margin-top:28px">Piyano sesi: Salamander Grand Piano, Alexander Holm (CC BY 3.0). · Sürüm 5 (20.11.2026)</p>
+  <p class="hint" style="margin-top:28px">Piyano sesi: Salamander Grand Piano, Alexander Holm (CC BY 3.0). · Sürüm 6 (20.11.2026)</p>
 </main>
 
 <nav class="tabs" aria-label="Bölümler">
@@ -827,5 +828,6 @@ load();
 setTab(SUB[location.hash.slice(1)]?location.hash.slice(1):'sarkilar');
 }
 </script>
+<script>if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
 </body>
 </html>
