@@ -40,32 +40,42 @@ button{touch-action:manipulation;cursor:pointer}
 main{max-width:760px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom))}
 h2.title{font:700 clamp(28px,7vw,40px)/1.05 "Playfair Display",Georgia,serif;letter-spacing:-.02em;margin:4px 0 6px;text-wrap:balance}
 h3{font-size:17px;margin:22px 0 8px}
-.meta{margin:0 0 14px;color:var(--muted)}
+.meta{margin:0 0 12px;color:var(--muted)}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.kbwrap{position:sticky;top:0;z-index:3;background:var(--bg);padding:8px 0 6px;margin:0 -2px}
 .kb svg{display:block;width:100%;height:auto}
-.kbinfo{margin:0 0 10px;min-height:48px}
+.kbinfo{margin:0 0 8px;min-height:72px}
 .kbinfo b{font:700 22px/1.1 "Playfair Display",Georgia,serif}
 .f{font-variant-numeric:tabular-nums;color:var(--muted);font-size:15px}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 0;font-size:13px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 0;font-size:13px;color:var(--muted)}
 .sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
 .sw.lh{background:var(--brass)}.sw.rh{background:var(--felt)}
 .sw.dot{width:8px;height:8px;border-radius:50%;background:#8d8a84;vertical-align:1px}
-.btn{min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font-size:16px}
+.btn{min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font-size:16px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--ink)}
 .btn.sm{min-height:40px;padding:6px 12px;font-size:15px}
 .btn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .btn.pri{background:var(--felt);border-color:var(--felt);color:#fff}
 .btn.ghost{background:transparent}
-.btn:focus-visible,.chip:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid color-mix(in srgb,var(--felt) 45%,transparent);outline-offset:2px}
-.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0}
+.btn:focus-visible,.chip:focus-visible,.sc:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid color-mix(in srgb,var(--felt) 45%,transparent);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}
 .row .lbl{color:var(--muted);font-size:15px;margin-right:2px}
 .out{min-width:3ch;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.seg button{min-height:40px;padding:6px 12px;border:0;background:var(--panel);font-size:15px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex-wrap:wrap}
+.seg button{min-height:42px;padding:6px 14px;border:0;background:var(--panel);font-size:15px}
 .seg button.on{background:var(--ink);color:var(--bg)}
+.lvl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.lvl button{min-height:48px;border:0;background:var(--panel);font-size:16px}
+.lvl button+button{border-left:1px solid var(--line)}
+.lvl button.on{background:var(--felt);color:#fff;font-weight:600}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{min-width:58px;min-height:48px;padding:6px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font:700 20px/1 "Playfair Display",Georgia,serif}
 .chip.on{background:var(--felt);border-color:var(--felt);color:#fff}
-.chip.bad{border-style:dashed;color:var(--muted)}
+.chip.bad,.sc.bad{border-style:dashed;color:var(--muted)}
+.secs{display:grid;gap:12px;margin-top:10px}
+.sec h4{margin:0 0 6px;font-size:14px;color:var(--muted);font-weight:600}
+.sline{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.sc{min-width:50px;min-height:44px;padding:4px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font:700 18px/1 "Playfair Display",Georgia,serif;scroll-margin-top:300px;scroll-margin-bottom:90px}
+.sc.on{background:var(--felt);border-color:var(--felt);color:#fff}
 .staff{width:100%;overflow:hidden;margin-top:6px}
 .staff svg{display:block}
 .sl{stroke:var(--staff);stroke-width:1}
@@ -92,13 +102,15 @@ h3{font-size:17px;margin:22px 0 8px}
 .lhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 input[type=search],input[type=text],textarea{width:100%;font-size:16px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 12px;min-height:44px}
 textarea{min-height:88px;resize:vertical;font-family:ui-monospace,Menlo,monospace;font-size:15px}
-label.fl2{display:block;font-weight:600;margin:14px 0 6px}
+label.fl2{display:block;font-weight:600;margin:12px 0 6px}
 label.fl2 small{font-weight:400;color:var(--muted)}
+label.ck{display:flex;align-items:center;gap:10px;min-height:44px;margin:6px 0 0}
+label.ck input{width:22px;height:22px;accent-color:var(--felt);flex:none}
 .songs{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
 .songs button{width:100%;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--panel)}
 .s1{font:700 19px/1.2 "Playfair Display",Georgia,serif}
 .s2{grid-column:1;color:var(--muted);font-size:14px}
-.tags{grid-column:2;grid-row:1/3;align-self:center;display:flex;gap:6px}
+.tags{grid-column:2;grid-row:1/3;align-self:center;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .tags i{font-style:normal;font-size:13px;padding:3px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
 .empty{padding:28px 16px;text-align:center;border:1px dashed var(--line);border-radius:14px;margin-top:14px}
 .back{border:0;background:none;color:var(--felt);font-size:16px;padding:8px 0;min-height:44px}
@@ -121,17 +133,22 @@ label.fl2 small{font-weight:400;color:var(--muted)}
 .sheet dt{color:var(--muted)}.sheet dd{margin:0}
 .sheet h4{margin:0 0 6px;font-size:16px}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.links a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);color:var(--ink);text-decoration:none;background:var(--bg)}
 .cprev{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .cprev span{padding:3px 10px;border-radius:999px;border:1px solid var(--line);font-size:14px}
 .cprev span.bad{border-color:var(--felt);color:var(--felt)}
+.steps{margin:0 0 10px;padding-left:20px;color:var(--muted);font-size:15px}
+.steps li{margin:2px 0}
+details.more{margin-top:22px;border-top:1px solid var(--line);padding-top:8px}
+details.more summary{min-height:44px;display:flex;align-items:center;font-weight:600;cursor:pointer}
+.src{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.src a{color:var(--muted)}
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--bg);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:4px max(8px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(8px,env(safe-area-inset-left))}
 .tabs button{border:0;background:none;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;color:var(--muted)}
 .tabs svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tabs button.on{color:var(--felt);font-weight:600}
 .confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
 @media (min-width:720px){.ans b{font-size:21px}}
-@media (prefers-reduced-motion:no-preference){.chip,.ans button,.btn{transition:background-color .15s,color .15s}}
+@media (prefers-reduced-motion:no-preference){.chip,.sc,.ans button,.btn{transition:background-color .15s,color .15s}}
 </style>
 </head>
 <body>
@@ -181,43 +198,64 @@ label.fl2 small{font-weight:400;color:var(--muted)}
   </section>
 
   <section id="v-ekle" hidden>
-    <h2 class="title" id="f-head">Yeni şarkı</h2>
-    <p class="meta">Akorları internette bul, buraya yaz; uygulama hangi tuşlara basacağını gösterir.</p>
-    <form id="sform" novalidate>
-      <label class="fl2" for="f-title">Şarkı adı</label>
-      <input id="f-title" type="text" autocomplete="off" placeholder="Big Iron">
-      <p class="err" id="e-title" hidden></p>
-      <label class="fl2" for="f-artist">Sanatçı <small>(isteğe bağlı)</small></label>
-      <input id="f-artist" type="text" autocomplete="off" placeholder="Marty Robbins">
-      <div class="links"><a id="q-g" href="https://www.google.com/search?q=piano+chords" target="_blank" rel="noopener">Google'da akor ara</a><a id="q-u" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=" target="_blank" rel="noopener">Ultimate Guitar'da ara</a></div>
-      <label class="fl2" for="f-key">Ton <small>(isteğe bağlı)</small></label>
-      <input id="f-key" type="text" autocomplete="off" autocapitalize="off" placeholder="D">
-      <label class="fl2" for="f-chords">Akorlar <small>(boşlukla ayır)</small></label>
-      <input id="f-chords" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="D Bm G A">
-      <div class="cprev" id="c-prev"></div>
-      <p class="err" id="e-chords" hidden></p>
-      <label class="fl2" for="f-mel">Melodi <small>(isteğe bağlı)</small></label>
-      <textarea id="f-mel" spellcheck="false" autocapitalize="off" placeholder="C4 C4 G4 G4 | A4 A4 G4:2"></textarea>
-      <p class="hint">Nota + oktav, iki nokta, vuruş: C4 = 1 vuruş, G4:2 = 2 vuruş, E4:0.5 = yarım vuruş, D4:1.5 = noktalı. Sus: R:1. Ölçü çizgisi: |</p>
-      <p class="err" id="e-mel" hidden></p>
-      <label class="fl2" for="f-notes">Not <small>(isteğe bağlı)</small></label>
-      <textarea id="f-notes" style="font-family:inherit;font-size:16px" placeholder="Hangi parmakla başlanır, nerede zorlandın…"></textarea>
-      <div class="row"><button class="btn pri" type="submit" id="f-save">Kaydet</button><button class="btn ghost" type="button" data-act="f-cancel" id="f-cancel" hidden>Vazgeç</button></div>
-    </form>
-    <h3>Kodla ekle</h3>
+    <h2 class="title">Şarkı ekle</h2>
     <div class="panel">
-      <p style="margin:0 0 8px">Gelen şarkı kodunu (PD1:… veya yedek PDY1:…) buraya yapıştır.</p>
-      <textarea id="imp" spellcheck="false" autocapitalize="off" placeholder="PD1:eyJ0aXRsZSI6…"></textarea>
-      <div class="row" style="margin-bottom:0"><button class="btn" data-act="import">Kodu ekle</button></div>
+      <h3 style="margin-top:0">1. Şarkı iste</h3>
+      <ol class="steps"><li>Adını ve sanatçısını yaz, isteği gönder.</li><li>Akorlar araştırılıp sana #PIYANO ile başlayan bir metin olarak gelir.</li><li>O metni kopyala, aşağıdaki 2. adımda ekle.</li></ol>
+      <label class="fl2" for="r-title">Şarkı adı</label>
+      <input id="r-title" type="text" autocomplete="off" placeholder="Big Iron">
+      <label class="fl2" for="r-artist">Sanatçı</label>
+      <input id="r-artist" type="text" autocomplete="off" placeholder="Marty Robbins">
+      <p class="err" id="e-r" hidden>Şarkı adını yaz.</p>
+      <div class="row"><a class="btn pri" id="r-wa" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp'la gönder</a><button class="btn" data-act="r-copy">İsteği kopyala</button></div>
+      <textarea id="r-box" readonly hidden></textarea>
+      <p class="msg" id="r-msg"></p>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <h3 style="margin-top:0">2. Gelen şarkıyı ekle</h3>
+      <p style="margin:0 0 10px">Gelen metni kopyaladıysan tek dokunuş yeter.</p>
+      <button class="btn pri" data-act="paste">Panodan yapıştır ve ekle</button>
+      <label class="fl2" for="imp">Ya da buraya yapıştır <small>(kutuya uzun bas → Yapıştır)</small></label>
+      <textarea id="imp" spellcheck="false" autocapitalize="off" placeholder="#PIYANO&#10;Şarkı: …"></textarea>
+      <div class="row" style="margin-bottom:0"><button class="btn" data-act="import">Şarkıyı ekle</button></div>
       <p class="msg" id="imp-msg"></p>
     </div>
-    <h3>Yedek</h3>
-    <div class="panel">
-      <p style="margin:0 0 8px">Şarkılar bu telefonda saklanır. Telefon değişirse diye tüm şarkıların kodunu bir yere kaydet; geri yüklemek için "Kodla ekle"ye yapıştır.</p>
+
+    <details class="more" id="manual">
+      <summary id="f-head">Elle ekle veya düzenle</summary>
+      <form id="sform" novalidate>
+        <label class="fl2" for="f-title">Şarkı adı</label>
+        <input id="f-title" type="text" autocomplete="off">
+        <p class="err" id="e-title" hidden></p>
+        <label class="fl2" for="f-artist">Sanatçı <small>(isteğe bağlı)</small></label>
+        <input id="f-artist" type="text" autocomplete="off">
+        <div class="links"><a class="btn sm" id="q-g" href="https://www.google.com/search?q=piano+chords" target="_blank" rel="noopener">Google'da akor ara</a><a class="btn sm" id="q-u" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=" target="_blank" rel="noopener">Ultimate Guitar'da ara</a></div>
+        <label class="fl2" for="f-key">Ton <small>(isteğe bağlı)</small></label>
+        <input id="f-key" type="text" autocomplete="off" autocapitalize="off" placeholder="D">
+        <label class="fl2" for="f-seq">Akor sırası</label>
+        <textarea id="f-seq" spellcheck="false" autocapitalize="off" placeholder="[Kıta]&#10;D Bm | G A Bm&#10;[Nakarat]&#10;G D | A D"></textarea>
+        <p class="hint">Bölüm adı köşeli parantezde, her satır bir akor satırı. Bölüm yazmazsan hepsi tek bölüm olur.</p>
+        <div class="cprev" id="c-prev"></div>
+        <p class="err" id="e-chords" hidden></p>
+        <label class="fl2" for="f-mel">Melodi <small>(isteğe bağlı)</small></label>
+        <textarea id="f-mel" spellcheck="false" autocapitalize="off" placeholder="C4 C4 G4 G4 | A4 A4 G4:2"></textarea>
+        <p class="hint">Nota + oktav, iki nokta, vuruş: C4 = 1 vuruş, G4:2 = 2 vuruş, E4:0.5 = yarım vuruş, D4:1.5 = noktalı. Sus: R:1. Ölçü çizgisi: |</p>
+        <p class="err" id="e-mel" hidden></p>
+        <label class="fl2" for="f-src">Kaynak <small>(isteğe bağlı)</small></label>
+        <input id="f-src" type="text" autocomplete="off" autocapitalize="off">
+        <label class="fl2" for="f-notes">Not <small>(isteğe bağlı)</small></label>
+        <textarea id="f-notes" style="font-family:inherit;font-size:16px"></textarea>
+        <div class="row"><button class="btn pri" type="submit">Kaydet</button><button class="btn ghost" type="button" data-act="f-cancel" id="f-cancel" hidden>Vazgeç</button></div>
+      </form>
+    </details>
+
+    <details class="more">
+      <summary>Yedek</summary>
+      <p style="margin:0 0 8px">Şarkılar bu telefonda saklanır. Telefon değişirse diye tüm şarkıların kodunu bir yere kaydet; geri yüklemek için 2. adıma yapıştır.</p>
       <button class="btn" data-act="backup">Yedek kodunu kopyala</button>
       <textarea id="bk" readonly hidden style="margin-top:10px"></textarea>
       <p class="msg" id="bk-msg"></p>
-    </div>
+    </details>
   </section>
 </main>
 
@@ -235,15 +273,23 @@ const NAT={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
 const SOL={C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'};
 const NAMES=['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
 const SHARP=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const BLACK=[1,3,6,8,10];
 const Q={'':[[0,4,7],[0,2,4],'Majör'],m:[[0,3,7],[0,2,4],'Minör'],'7':[[0,4,7,10],[0,2,4,6],'Dominant 7'],maj7:[[0,4,7,11],[0,2,4,6],'Majör 7'],m7:[[0,3,7,10],[0,2,4,6],'Minör 7'],'6':[[0,4,7,9],[0,2,4,5],'Majör 6'],m6:[[0,3,7,9],[0,2,4,5],'Minör 6'],sus2:[[0,2,7],[0,1,4],'Sus2'],sus4:[[0,5,7],[0,3,4],'Sus4'],dim:[[0,3,6],[0,2,4],'Eksik (dim)'],dim7:[[0,3,6,9],[0,2,4,6],'Eksik 7 (dim7)'],m7b5:[[0,3,6,10],[0,2,4,6],'Yarı eksik (m7b5)'],aug:[[0,4,8],[0,2,4],'Artık (aug)'],add9:[[0,4,7,14],[0,2,4,1],'Add9'],'9':[[0,4,7,10,14],[0,2,4,6,1],'Dominant 9'],'5':[[0,7],[0,4],'Güç akoru (5)']};
 const ALIAS={min:'m','-':'m',M7:'maj7',Maj7:'maj7',maj:'',M:'',sus:'sus4','+':'aug','°':'dim',o:'dim'};
+const SIMP={'7':'',maj7:'','9':'',add9:'','6':'',sus2:'',sus4:'','5':'',m7:'m',m6:'m',dim7:'dim',m7b5:'dim'};
 const TYPES=[['','Majör'],['m','Minör'],['7','7'],['maj7','maj7'],['m7','m7'],['sus2','sus2'],['sus4','sus4'],['dim','dim'],['aug','aug'],['6','6'],['add9','add9']];
+const LVL={bas:'Başlangıç',orta:'Orta',ileri:'İleri'};
+const LVLHINT={bas:'Sağ el: akor değişince üç notaya birlikte bas, değişene kadar tut. Sol el çalmaz.',orta:'Sol el: ölçü başında kök nota. Sağ el: kalan vuruşlarda akoru bas.',ileri:'Sol el: kök nota ve bir oktav aşağısı. Sağ el: akor notalarını alttan üste tek tek çal (arpej). 7\'li ve slash akorlar tam haliyle.'};
 const ODE='E4 E4 F4 G4 | G4 F4 E4 D4 | C4 C4 D4 E4 | E4:1.5 D4:0.5 D4:2 | E4 E4 F4 G4 | G4 F4 E4 D4 | C4 C4 D4 E4 | D4:1.5 C4:0.5 C4:2 | D4 D4 E4 C4 | D4 E4:0.5 F4:0.5 E4 C4 | D4 E4:0.5 F4:0.5 E4 D4 | C4 D4 G3:2 | E4 E4 F4 G4 | G4 F4 E4 D4 | C4 C4 D4 E4 | D4:1.5 C4:0.5 C4:2';
 const TW='C4 C4 G4 G4 | A4 A4 G4:2 | F4 F4 E4 E4 | D4 D4 C4:2 | G4 G4 F4 F4 | E4 E4 D4:2 | G4 G4 F4 F4 | E4 E4 D4:2 | C4 C4 G4 G4 | A4 A4 G4:2 | F4 F4 E4 E4 | D4 D4 C4:2';
+const MCV='D Bm | D Bm | D Bm | G A Bm',MCA='G D G D | G D Bm | G A D G | D G A D',MCN='D F#m | G D | Bm Em | F#m Bm';
 const SEEDS=[
- {id:'masters-call',title:"Master's Call",artist:'Marty Robbins',key:'D',chords:['D','Bm','G','A'],melody:'',notes:"Telifli şarkı (Marty Robbins, 1959): melodi ve söz burada yok.\nAkor sırasını internetteki akor kağıdından takip et; sözlerin üstündeki akor değişince bas.\nKayıt yarım ses yukarıda: Ton kaydır +1 yap → Eb, Cm, Ab, Bb.\nGelişmiş versiyonda Em ve F#m de geçiyor."},
- {id:'ode-to-joy',title:'Neşeye Övgü (Ode to Joy)',artist:'L. v. Beethoven, 1824',key:'C',chords:['C','G'],melody:ODE,notes:'Kamu malı. 4/4.\nSağ el 5 parmak: başparmak C4, serçe G4. 12. ölçüdeki alçak G (G3) için el aşağı kayar.\nSol el için basit eşlik: C ve G.'},
- {id:'twinkle',title:'Küçük Yıldız (Twinkle Twinkle)',artist:'Geleneksel, 18. yy Fransız ezgisi',key:'C',chords:['C','F','G'],melody:TW,notes:'Kamu malı. 4/4.\nİlk melodi için en kolayı: sağ el C4–A4 arası, başparmak C4.'}
+ {id:'masters-call',title:"Master's Call",artist:'Marty Robbins',key:'D',level:'bas',easy:true,src:'chords-and-tabs.net (iki ayrı akor kağıdı karşılaştırıldı)',melody:'',
+  sections:[{n:'Kıta 1',c:'D Bm | A D Bm | D Bm | G A Bm'},{n:'Kıta 2',c:MCV},{n:'Ara',c:MCA},{n:'Nakarat',c:MCN},{n:'Kıta 3',c:MCV},{n:'Ara',c:MCA},{n:'Nakarat',c:MCN},{n:'Kıta 4',c:MCV},{n:'Kıta 5',c:MCV}],
+  notes:"Telifli şarkı (Marty Robbins, 1959): söz ve melodi yok, sadece akor sırası.\nKayıt Eb tonunda (D şekilleri capo 1). Kayıtla birlikte çalmak için Orta veya İleri seç, Ton kaydır +1.\nKaynaklar nakaratın son satırında ayrılıyor: biri 'A F#m Bm', diğeri 'F#m Bm' yazıyor."},
+ {id:'ode-to-joy',title:'Neşeye Övgü (Ode to Joy)',artist:'L. v. Beethoven, 1824',key:'C',level:'bas',easy:true,src:'',chords:['C','G'],sections:[],melody:ODE,notes:'Kamu malı. 4/4.\nSağ el 5 parmak: başparmak C4, serçe G4. 12. ölçüdeki alçak G (G3) için el aşağı kayar.\nSol el için basit eşlik: C ve G.'},
+ {id:'twinkle',title:'Küçük Yıldız (Twinkle Twinkle)',artist:'Geleneksel, 18. yy Fransız ezgisi',key:'C',level:'bas',easy:true,src:'',melody:TW,
+  sections:[{n:'A',c:'C F C | F C G C'},{n:'B',c:'C F C G | C F C G'},{n:'A',c:'C F C | F C G C'}],notes:'Kamu malı. 4/4.\nİlk melodi için en kolayı: sağ el C4–A4 arası, başparmak C4.'}
 ];
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -252,6 +298,7 @@ const trN=(l,a)=>SOL[l]+accSym(a);
 const pcOf=(l,a)=>(NAT[l]+({'#':1,b:-1,'##':2,bb:-2}[a]||0)+12)%12;
 const str=(v,n)=>typeof v==='string'?v.slice(0,n):'';
 const newId=()=>'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const tokens=line=>String(line||'').split(/[\s,|]+/).filter(Boolean);
 
 function spell(L0,rpc,iv,step){const L=LET[(LET.indexOf(L0)+step)%7];let d=((rpc+iv-NAT[L])%12+12)%12;if(d>6)d-=12;const a=d===1?'#':d===2?'##':d===-1?'b':d===-2?'bb':'';return {l:L,a,pc:(rpc+iv)%12};}
 function parseChord(s){
@@ -264,12 +311,21 @@ function parseChord(s){
   return {name:s,root:{l:m[1],a:m[2],pc:rpc},suf,q,tones:q[0].map((iv,k)=>spell(m[1],rpc,iv,q[1][k])),bass:m[4]?{l:m[4],a:m[5],pc:pcOf(m[4],m[5])}:null};
 }
 function trChord(s,n){if(!n)return s;const c=parseChord(s);if(!c)return s;const sh=p=>NAMES[((p+n)%12+12)%12];return sh(c.root.pc)+c.suf+(c.bass?'/'+sh(c.bass.pc):'');}
+function simplify(s){const c=parseChord(s);if(!c)return s;return c.root.l+c.root.a+(c.suf in SIMP?SIMP[c.suf]:c.suf);}
+function blackCount(names,n){let k=0;names.forEach(nm=>{const c=parseChord(trChord(nm,n));if(c)new Set(c.tones.map(t=>t.pc)).forEach(p=>{if(BLACK.includes(p))k++;});});return k;}
+function easyShift(names){const u=[...new Set(names.map(simplify))];let best=0,bk=blackCount(u,0);[1,-1,2,-2,3,-3,4,-4,5,-5,6].forEach(n=>{const k=blackCount(u,n);if(k<bk){bk=k;best=n;}});return best;}
 function voice(c,mode){
   const b=c.bass||c.root;let lh=[{m:48+b.pc,label:b.l+b.a}],rh;
   if(mode==='temel'){let r=60+c.root.pc;if(r+Math.max(...c.q[0])>83)r-=12;rh=c.q[0].map((iv,k)=>({m:r+iv,label:c.tones[k].l+c.tones[k].a}));}
   else{const seen=new Set();rh=[];c.tones.forEach(t=>{if(!seen.has(t.pc)){seen.add(t.pc);rh.push({m:60+t.pc,label:t.l+t.a});}});rh.sort((x,y)=>x.m-y.m);}
   if(rh.some(o=>o.m<=lh[0].m))lh=[];
   return {lh,rh};
+}
+function voiceLvl(c,lvl){
+  const v=voice(c,'kolay');
+  if(lvl==='bas')return {lh:[],rh:v.rh};
+  if(lvl==='ileri'&&v.lh.length){const o=v.lh[0];return {lh:[{m:o.m-12,label:o.label},o],rh:v.rh,arp:true};}
+  return v;
 }
 function chordInfo(c){
   const names=c.tones.map(t=>t.l+t.a),tr=c.tones.map(t=>trN(t.l,t.a));
@@ -351,41 +407,85 @@ function melodySVG(items,W,cur,names){
 
 let AC=null;
 function ac(){try{if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();}if(AC.state==='suspended')AC.resume();return AC;}catch(e){return null;}}
-function play(midis,dur){
+function play(midis,dur,delay){
   const a=ac();if(!a||!midis.length)return;dur=dur||1.2;
-  const t=a.currentTime+0.02,g0=a.createGain();g0.gain.value=0.3/Math.sqrt(midis.length);g0.connect(a.destination);
+  const t=a.currentTime+0.02+(delay||0),g0=a.createGain();g0.gain.value=0.3/Math.sqrt(midis.length);g0.connect(a.destination);
   midis.forEach(m=>{const f=440*Math.pow(2,(m-69)/12);
     [['triangle',1,1],['sine',2,0.22]].forEach(([type,mul,amp])=>{const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f*mul;
       g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(amp,t+0.015);g.gain.exponentialRampToValueAtTime(0.0001,t+dur+0.35);
       o.connect(g);g.connect(g0);o.start(t);o.stop(t+dur+0.4);});});
 }
+function playV(v){
+  if(v.arp){play(v.lh.map(o=>o.m),1.8);v.rh.forEach((o,k)=>play([o.m],1.4,0.2+k*0.18));}
+  else play([...v.lh,...v.rh].map(o=>o.m),1.4);
+}
 
 const KEY='piyanoDefteri.v1';
-const DB={songs:[],stats:{ok:0,total:0,streak:0,best:0}};
+const DB={ver:2,songs:[],stats:{ok:0,total:0,streak:0,best:0}};
+function cleanSections(a){return Array.isArray(a)?a.filter(x=>x&&typeof x.n==='string'&&typeof x.c==='string'&&tokens(x.c).length).slice(0,60).map(x=>({n:x.n.trim().slice(0,40)||'Bölüm',c:x.c.slice(0,600)})):[];}
 function clean(o){
   if(!o||typeof o!=='object'||typeof o.title!=='string'||!o.title.trim())return null;
-  return {id:typeof o.id==='string'&&o.id?o.id.slice(0,40):newId(),title:o.title.trim().slice(0,120),artist:str(o.artist,120),key:str(o.key,12),
-    chords:Array.isArray(o.chords)?o.chords.filter(x=>typeof x==='string').map(x=>x.trim().slice(0,12)).filter(Boolean).slice(0,64):[],
-    melody:str(o.melody,6000),notes:str(o.notes,2000)};
+  const sections=cleanSections(o.sections);
+  let chords=Array.isArray(o.chords)?o.chords.filter(x=>typeof x==='string').map(x=>x.trim().slice(0,12)).filter(Boolean).slice(0,64):[];
+  if(sections.length)chords=[...new Set(sections.flatMap(s=>tokens(s.c)))].slice(0,64);
+  return {id:typeof o.id==='string'&&o.id?o.id.slice(0,40):newId(),title:o.title.trim().slice(0,120),artist:str(o.artist,120).trim(),key:str(o.key,12).trim(),
+    chords,sections,melody:str(o.melody,6000),notes:str(o.notes,2000),src:str(o.src,300).trim(),
+    level:['bas','orta','ileri'].includes(o.level)?o.level:'bas',easy:o.easy!==false};
 }
 function load(){
-  try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);if(o&&Array.isArray(o.songs)){DB.songs=o.songs.map(clean).filter(Boolean);if(o.stats)Object.assign(DB.stats,o.stats);return;}}}catch(e){}
-  DB.songs=SEEDS.map(s=>({...s,chords:[...s.chords]}));save();
+  try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);if(o&&Array.isArray(o.songs)){
+    DB.songs=o.songs.map(clean).filter(Boolean);if(o.stats)Object.assign(DB.stats,o.stats);
+    if((o.ver||1)<2){SEEDS.forEach(sd=>{const i=DB.songs.findIndex(s=>s.id===sd.id);if(i>=0&&!DB.songs[i].sections.length)DB.songs[i]=clean(sd);});DB.ver=2;save();}
+    return;}}}catch(e){}
+  DB.songs=SEEDS.map(clean);save();
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
 function enc(obj){const b=new TextEncoder().encode(JSON.stringify(obj));let s='';b.forEach(x=>{s+=String.fromCharCode(x);});return btoa(s);}
 function dec(b64){const s=atob(b64);const u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return JSON.parse(new TextDecoder().decode(u));}
-const strip=({id,...r})=>r;
-const songCode=s=>'PD1:'+enc(strip(s));
-const backupCode=()=>'PDY1:'+enc(DB.songs.map(strip));
-function readCode(txt){
-  const m=/(PDY?1):([A-Za-z0-9+/=]+)/.exec(String(txt||''));if(!m)throw new Error('nocode');
-  const data=dec(m[2]);const arr=m[1]==='PDY1'?data:[data];if(!Array.isArray(arr))throw new Error('bad');
-  return arr.map(o=>clean({...o,id:newId()})).filter(Boolean);
+const backupCode=()=>'PDY1:'+enc(DB.songs.map(({id,...r})=>r));
+function songText(s){
+  const L=['#PIYANO','Şarkı: '+s.title];
+  if(s.artist)L.push('Sanatçı: '+s.artist);if(s.key)L.push('Ton: '+s.key);if(s.src)L.push('Kaynak: '+s.src);
+  if(s.sections.length)s.sections.forEach(x=>{L.push('['+x.n+']');x.c.split('|').map(t=>t.trim()).filter(Boolean).forEach(t=>L.push(t));});
+  else if(s.chords.length)L.push('[Akorlar]',s.chords.join(' '));
+  if(s.melody)L.push('Melodi: '+s.melody.replace(/\s+/g,' ').trim());
+  if(s.notes)s.notes.split('\n').filter(x=>x.trim()).forEach(x=>L.push('Not: '+x.trim()));
+  return L.join('\n');
+}
+function chordLine(l){const t=tokens(l);if(!t.length)return false;return t.filter(x=>parseChord(x)).length/t.length>=0.6;}
+function parseSections(lines,into){
+  let cur=null;
+  lines.forEach(l=>{let m=/^\[(.+)\]$/.exec(l);
+    if(m){cur={n:m[1].trim(),c:[]};into.push(cur);return;}
+    if(chordLine(l)){if(!cur){cur={n:'Akorlar',c:[]};into.push(cur);}cur.c.push(l.replace(/\s*\|\s*$/,''));}
+  });
+  return into.map(x=>({n:x.n,c:x.c.join(' | ')}));
+}
+function parseText(txt){
+  const raw=String(txt||'').replace(/\r/g,'').split('\n');
+  let from=0;raw.forEach((l,i)=>{if(/^\s*[*_`]*#PIYANO/i.test(l))from=i+1;});
+  const o={title:'',artist:'',key:'',src:'',melody:'',notes:[]},secLines=[];
+  raw.slice(from).forEach(l0=>{
+    const l=l0.replace(/^\s*(?:[-*•]\s+)?/,'').replace(/\*\*|__|`/g,'').trim();if(!l)return;
+    let m;
+    if(m=/^(?:şark[ıi]|sark[ıi])\s*:\s*(.*)$/iu.exec(l))o.title=m[1].trim();
+    else if(m=/^(?:sanat[çc][ıi])\s*:\s*(.*)$/iu.exec(l))o.artist=m[1].trim();
+    else if(m=/^ton\s*:\s*(.*)$/iu.exec(l))o.key=m[1].trim().split(/\s/)[0]||'';
+    else if(m=/^kaynak\s*:\s*(.*)$/iu.exec(l))o.src=m[1].trim();
+    else if(m=/^melodi\s*:\s*(.*)$/iu.exec(l))o.melody=m[1].trim();
+    else if(m=/^not\s*:\s*(.*)$/iu.exec(l))o.notes.push(m[1].trim());
+    else secLines.push(l);
+  });
+  return clean({...o,notes:o.notes.join('\n'),sections:parseSections(secLines,[])});
+}
+function parseIncoming(txt){
+  const m=/(PDY?1):([A-Za-z0-9+/=]+)/.exec(String(txt||''));
+  if(m){const data=dec(m[2]);const arr=m[1]==='PDY1'?data:[data];if(!Array.isArray(arr))throw new Error('bad');return arr.map(o=>clean({...o,id:newId()})).filter(Boolean);}
+  const s=parseText(txt);if(!s)throw new Error('nosong');return [s];
 }
 const getSong=id=>DB.songs.find(s=>s.id===id);
 
-const st={tab:'sarkilar',song:null,tr:0,chord:0,focus:'chord',mi:-1,voicing:'kolay',names:true,bpm:90,playing:false,timer:0,items:[],q:'',edit:null,del:false,
+const st={tab:'sarkilar',song:null,tr:0,chord:0,pos:0,focus:'seq',mi:-1,voicing:'kolay',names:true,bpm:90,playing:false,timer:0,items:[],seq:[],uniq:[],shift:0,q:'',edit:null,
   ac:'D',clef:'sol',tq:null,tTimer:0,lastW:0};
 const SUB={sarkilar:'Şarkılar',akor:'Akor bulucu',nota:'Nota okuma',ekle:'Şarkı ekle'};
 
@@ -399,16 +499,17 @@ function setTab(t,keep){
   if(t==='sarkilar')st.song?renderSong():renderList();
   if(t==='akor')renderAkor();
   if(t==='nota'){if(!st.tq)st.tq=newQ();renderTrainer();}
-  if(t==='ekle'&&!keep)fillForm(null);
+  if(t==='ekle'&&!keep){fillForm(null);updateReq();}
   window.scrollTo(0,0);
 }
+function openSong(id){st.song=id;st.tr=0;st.chord=0;st.pos=0;st.mi=-1;st.focus='seq';stopPlay();if(st.tab!=='sarkilar')setTab('sarkilar');else{renderSong();window.scrollTo(0,0);}}
 
 function listHTML(){
   const q=st.q.toLowerCase().trim();
   const list=DB.songs.filter(s=>(s.title+' '+s.artist).toLowerCase().includes(q));
   if(!DB.songs.length)return `<div class="empty"><p style="margin:0 0 12px">Şarkı defterin boş. İlk şarkını ekle.</p><button class="btn pri" data-tab="ekle">Şarkı ekle</button></div>`;
   if(!list.length)return `<p class="hint" style="margin-top:14px">"${esc(st.q)}" ile eşleşen şarkı yok.</p>`;
-  return `<ul class="songs">${list.map(s=>`<li><button data-act="open" data-id="${esc(s.id)}"><span class="s1">${esc(s.title)}</span><span class="s2">${esc(s.artist||'Sanatçı yok')}${s.key?' · Ton '+esc(s.key):''}</span><span class="tags">${s.chords.length?'<i>Akor</i>':''}${s.melody?'<i>Melodi</i>':''}</span></button></li>`).join('')}</ul>`;
+  return `<ul class="songs">${list.map(s=>`<li><button data-act="open" data-id="${esc(s.id)}"><span class="s1">${esc(s.title)}</span><span class="s2">${esc(s.artist||'Sanatçı yok')} · ${LVL[s.level]}</span><span class="tags">${s.chords.length?'<i>Akor</i>':''}${s.melody?'<i>Melodi</i>':''}</span></button></li>`).join('')}</ul>`;
 }
 function renderList(){
   $('#v-sarkilar').innerHTML=`<div class="lhead"><h2 class="title">Şarkı defteri</h2><button class="btn sm" data-tab="ekle">+ Şarkı ekle</button></div>
@@ -417,51 +518,77 @@ function renderList(){
 }
 
 const RO=new ResizeObserver(()=>{const el=$('#staff');if(el&&el.clientWidth!==st.lastW)drawStaff();});
+function songView(s){
+  const lvl=s.level,useEasy=lvl==='bas'&&s.easy;
+  const shift=useEasy?easyShift(s.chords):st.tr;
+  const disp=nm=>{const t=trChord(nm,shift);return lvl==='bas'?simplify(t):t;};
+  const seq=[];s.sections.forEach((x,si)=>x.c.split('|').forEach((line,li)=>tokens(line).forEach(ch=>seq.push({si,li,name:disp(ch)}))));
+  const uniq=[...new Set((s.sections.length?seq.map(x=>x.name):s.chords.map(disp)))];
+  return {lvl,useEasy,shift,seq,uniq,key:s.key?trChord(s.key,shift):''};
+}
 function renderSong(){
   const s=getSong(st.song);if(!s){st.song=null;renderList();return;}
-  const n=st.tr,chords=s.chords.map(c=>trChord(c,n)),key=s.key?trChord(s.key,n):'';
-  if(st.chord>=chords.length)st.chord=0;
-  const mp=parseMelody(s.melody);st.items=trMel(mp.items,n);
+  const v=songView(s);st.seq=v.seq;st.uniq=v.uniq;st.shift=v.shift;
+  if(st.pos>=v.seq.length)st.pos=0;if(st.chord>=v.uniq.length)st.chord=0;
+  const mp=parseMelody(s.melody);st.items=trMel(mp.items,v.shift);
   const hasMel=st.items.some(it=>it.t!=='bar');
-  if(!chords.length&&hasMel&&st.focus==='chord'){st.focus='note';}
+  if(st.focus==='seq'&&!v.seq.length)st.focus=v.uniq.length?'chord':'note';
+  const groups=[];v.seq.forEach((x,k)=>{const g=groups[x.si]||(groups[x.si]={n:s.sections[x.si].n,lines:[]});(g.lines[x.li]=g.lines[x.li]||[]).push(k);});
+  const orig=s.key&&v.shift?` <span class="f">(orijinal ${esc(s.key)})</span>`:'';
+  const srcHTML=s.src?`<p class="src">Kaynak: ${/^https?:\/\//.test(s.src)?`<a href="${esc(s.src)}" target="_blank" rel="noopener">${esc(s.src)}</a>`:esc(s.src)}</p>`:'';
   $('#v-sarkilar').innerHTML=`<button class="back" data-act="list">← Şarkılar</button>
   <h2 class="title">${esc(s.title)}</h2>
-  <p class="meta">${esc(s.artist||'')}${s.artist&&key?' · ':''}${key?'Ton: <b>'+esc(key)+'</b>':''}</p>
-  <div class="panel"><p class="kbinfo" id="kbinfo"></p><div class="kb" id="kb"></div>
-  <p class="legend"><span><span class="sw lh"></span>Sol el</span><span><span class="sw rh"></span>Sağ el</span><span><span class="sw dot"></span>Orta Do (C4)</span></p></div>
-  <div class="row"><span class="lbl">Ton kaydır</span><button class="btn sm" data-act="tr" data-d="-1" aria-label="Yarım ses aşağı">−1</button><span class="out">${n>0?'+':''}${n}</span><button class="btn sm" data-act="tr" data-d="1" aria-label="Yarım ses yukarı">+1</button>${n?'<button class="btn sm ghost" data-act="tr0">Sıfırla</button>':''}</div>
-  ${chords.length?`<h3>Akorlar <span class="f" style="font-weight:400">dokun: duy ve gör</span></h3><div class="chips" id="chips">${chords.map((c,i)=>`<button class="chip${parseChord(c)?'':' bad'}" data-act="chord" data-i="${i}">${esc(c)}</button>`).join('')}</div>
-  <div class="row"><span class="lbl">Sağ el</span><div class="seg" data-seg="voicing"><button data-v="kolay">Kolay geçiş</button><button data-v="temel">Temel konum</button></div></div>`:''}
+  <p class="meta">${esc(s.artist||'')}${s.artist&&v.key?' · ':''}${v.key?'Ton: <b>'+esc(v.key)+'</b>'+orig:''}</p>
+  <div class="lvl" role="group" aria-label="Zorluk">${Object.keys(LVL).map(k=>`<button data-act="lvl" data-v="${k}" class="${k===v.lvl?'on':''}">${LVL[k]}</button>`).join('')}</div>
+  <p class="hint">${esc(LVLHINT[v.lvl])}</p>
+  ${v.lvl==='bas'?`<label class="ck"><input type="checkbox" id="easy" ${s.easy?'checked':''}> Kolay ton ${v.useEasy&&v.shift?`<span class="f">(${v.shift>0?'+':''}${v.shift} yarım ses: siyah tuş en aza iner)</span>`:v.useEasy?'<span class="f">(şarkı zaten en kolay tonda)</span>':''}</label>`:''}
+  ${!v.useEasy?`<div class="row"><span class="lbl">Ton kaydır</span><button class="btn sm" data-act="tr" data-d="-1" aria-label="Yarım ses aşağı">−1</button><span class="out">${st.tr>0?'+':''}${st.tr}</span><button class="btn sm" data-act="tr" data-d="1" aria-label="Yarım ses yukarı">+1</button>${st.tr?'<button class="btn sm ghost" data-act="tr0">Sıfırla</button>':''}</div>`:''}
+  <div class="kbwrap"><div class="panel"><p class="kbinfo" id="kbinfo"></p><div class="kb" id="kb"></div>
+  <p class="legend"><span><span class="sw lh"></span>Sol el</span><span><span class="sw rh"></span>Sağ el</span><span><span class="sw dot"></span>Orta Do (C4)</span></p></div></div>
+  ${v.uniq.length?`<h3>Bu şarkıdaki akorlar <span class="f" style="font-weight:400">önce bunları çalış</span></h3><div class="chips" id="chips">${v.uniq.map((c,i)=>`<button class="chip${parseChord(c)?'':' bad'}" data-act="chord" data-i="${i}">${esc(c)}</button>`).join('')}</div>`:''}
+  ${v.seq.length?`<h3>Akor sırası</h3><div class="row" style="margin-top:0"><button class="btn sm" data-act="sprev">◀ Önceki</button><button class="btn sm pri" data-act="snext">Sonraki ▶</button><button class="btn sm ghost" data-act="s0">Baştan</button></div>
+  <div class="secs" id="secs">${groups.filter(Boolean).map(g=>`<div class="sec"><h4>${esc(g.n)}</h4>${g.lines.filter(Boolean).map(l=>`<div class="sline">${l.map(k=>`<button class="sc${parseChord(v.seq[k].name)?'':' bad'}" data-act="seq" data-p="${k}">${esc(v.seq[k].name)}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}
   ${hasMel?`<h3>Melodi <span class="f" style="font-weight:400">sol anahtarı</span></h3>
   <div class="mctl"><button class="btn sm" data-act="mprev" aria-label="Önceki nota">◀</button><button class="btn sm pri" data-act="mplay" id="mplay">Çal</button><button class="btn sm" data-act="mnext" aria-label="Sonraki nota">▶</button>
   <input type="range" id="bpm" min="40" max="160" step="5" value="${st.bpm}" aria-label="Tempo"><span class="out" id="bpmo">${st.bpm}</span><span class="f">vuruş/dk</span></div>
-  <label class="row" style="margin:8px 0 0;gap:8px"><input type="checkbox" id="names" ${st.names?'checked':''} style="width:22px;height:22px;accent-color:var(--felt)"> Nota adlarını göster</label>
+  <label class="ck"><input type="checkbox" id="names" ${st.names?'checked':''}> Nota adlarını göster</label>
   <div class="staff" id="staff"></div><p class="hint">Bir notaya dokun: sesini duy, tuşunu gör. Ses gelmezse telefonun sessiz modunu kapat.</p>`:''}
   ${mp.errs.length?`<p class="err">Okunamayan melodi parçaları: ${esc(mp.errs.join(' '))}</p>`:''}
-  ${s.notes?`<p class="notes">${esc(s.notes)}</p>`:''}
-  <div class="panel" style="margin-top:16px"><h3 style="margin-top:0">Paylaş</h3><p style="margin:0 0 10px">Kodu kopyala, WhatsApp'tan gönder. Karşı taraf Ekle → Kodla ekle bölümüne yapıştırsın.</p>
-  <button class="btn" data-act="code">Paylaş kodunu kopyala</button><textarea id="codebox" readonly hidden style="margin-top:10px"></textarea><p class="msg" id="codemsg"></p></div>
+  ${s.notes?`<p class="notes">${esc(s.notes)}</p>`:''}${srcHTML}
+  <div class="panel" style="margin-top:16px"><h3 style="margin-top:0">Paylaş</h3><p style="margin:0 0 10px">Şarkıyı metin olarak kopyala, WhatsApp'tan gönder. Karşı taraf Ekle → 2. adımda yapıştırsın.</p>
+  <button class="btn" data-act="code">Şarkıyı kopyala</button><textarea id="codebox" readonly hidden style="margin-top:10px"></textarea><p class="msg" id="codemsg"></p></div>
   <div class="row" style="margin-top:16px"><button class="btn" data-act="edit">Düzenle</button><button class="btn ghost" data-act="del">Sil</button></div>
   <div id="delbox"></div>`;
-  segSync();
   const el=$('#staff');if(el){RO.disconnect();RO.observe(el);drawStaff();}
   updateKb();
 }
 function drawStaff(){const el=$('#staff');if(!el)return;const W=Math.max(240,el.clientWidth||340);st.lastW=el.clientWidth;el.innerHTML=melodySVG(st.items,W,st.focus==='note'?st.mi:-1,st.names);}
+function curChord(){if(st.focus==='seq'&&st.seq[st.pos])return st.seq[st.pos].name;if(st.focus==='chord'&&st.uniq[st.chord])return st.uniq[st.chord];return null;}
 function updateKb(){
   const info=$('#kbinfo'),kb=$('#kb');if(!info)return;
-  const s=getSong(st.song);const chords=s?s.chords.map(c=>trChord(c,st.tr)):[];
+  const s=getSong(st.song);if(!s)return;
   document.querySelectorAll('#chips .chip').forEach((b,i)=>b.classList.toggle('on',st.focus==='chord'&&i===st.chord));
+  document.querySelectorAll('#secs .sc').forEach(b=>b.classList.toggle('on',st.focus==='seq'&&+b.dataset.p===st.pos));
   if(st.focus==='note'&&st.items[st.mi]){
-    const it=st.items[st.mi];
+    const it=st.items[st.mi],idx=st.items.filter(x=>x.t!=='bar').length,k=st.items.slice(0,st.mi+1).filter(x=>x.t!=='bar').length;
     if(it.t==='r'){info.innerHTML=`<b>Sus</b> · ${it.b} vuruş`;kb.innerHTML=kbSVG([],[]);return;}
-    info.innerHTML=`<b>${it.l}${accSym(it.a)}${it.o}</b> ${esc(trN(it.l,it.a))} · ${it.b} vuruş<br><span class="f">${it.midi===60?'Orta Do':'Sağ el'} · ${st.mi+1>0?'nota '+(st.items.slice(0,st.mi+1).filter(x=>x.t!=='bar').length)+'/'+st.items.filter(x=>x.t!=='bar').length:''}</span>`;
+    info.innerHTML=`<b>${it.l}${accSym(it.a)}${it.o}</b> ${esc(trN(it.l,it.a))} · ${it.b} vuruş<br><span class="f">Melodi · nota ${k}/${idx}</span>`;
     kb.innerHTML=kbSVG([],[{m:it.midi,label:it.l+it.a}]);return;
   }
-  if(!chords.length){info.innerHTML='<span class="f">Bir notaya dokun ya da Çal.</span>';kb.innerHTML=kbSVG([],[]);return;}
-  const c=parseChord(chords[st.chord]);
-  if(!c){info.innerHTML=`<b>${esc(chords[st.chord])}</b><br><span class="f">Bu akoru tanımıyorum. Düzenle'den yazımını kontrol et (ör. F#m, Bb7).</span>`;kb.innerHTML=kbSVG([],[]);return;}
-  const v=voice(c,st.voicing);info.innerHTML=chordInfo(c);kb.innerHTML=kbSVG(v.lh,v.rh);
+  const name=curChord();
+  if(!name){info.innerHTML='<span class="f">Bir akora ya da notaya dokun.</span>';kb.innerHTML=kbSVG([],[]);return;}
+  const c=parseChord(name);
+  if(!c){info.innerHTML=`<b>${esc(name)}</b><br><span class="f">Bu akoru tanımıyorum. Düzenle'den yazımını kontrol et (ör. F#m, Bb7).</span>`;kb.innerHTML=kbSVG([],[]);return;}
+  const v=voiceLvl(c,s.level);
+  let where='';if(st.focus==='seq'){const x=st.seq[st.pos];where=`<br><span class="f">${esc(s.sections[x.si].n)} · ${x.li+1}. satır · ${st.pos+1}/${st.seq.length}</span>`;}
+  info.innerHTML=chordInfo(c)+where;kb.innerHTML=kbSVG(v.lh,v.rh);
+}
+function playName(name,lvl){const c=parseChord(name);if(c)playV(voiceLvl(c,lvl));}
+function seqGo(p,scroll){
+  const s=getSong(st.song);if(!s||!st.seq.length)return;
+  st.pos=Math.max(0,Math.min(st.seq.length-1,p));st.focus='seq';updateKb();playName(st.seq[st.pos].name,s.level);
+  if(st.items.length)drawStaff();
+  if(scroll){const b=document.querySelector(`#secs .sc[data-p="${st.pos}"]`);if(b)b.scrollIntoView({block:'nearest',behavior:'smooth'});}
 }
 const noteIdx=()=>st.items.map((it,i)=>it.t==='bar'?-1:i).filter(i=>i>=0);
 function stepTo(i,sound){
@@ -479,19 +606,17 @@ function tick(){
 function segSync(){
   document.querySelectorAll('[data-seg]').forEach(g=>{const val=st[g.dataset.seg];g.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===val));});
 }
-
 function renderAkor(){
   const c=parseChord(st.ac);
   $('#ac-roots').innerHTML=NAMES.map(n=>`<button class="btn${c&&NAMES[c.root.pc]===n?' on':''}" data-act="ac-root" data-r="${n}">${n}</button>`).join('');
   $('#ac-types').innerHTML=TYPES.map(([k,l])=>`<button class="btn sm${c&&c.suf===k&&!c.bass?' on':''}" data-act="ac-type" data-t="${esc(k)}">${esc(l)}</button>`).join('');
   const inp=$('#ac-in');if(document.activeElement!==inp)inp.value=st.ac;
-  $('#ac-err').hidden=!!c;
+  $('#ac-err').hidden=!!c;segSync();
   if(!c){$('#ac-err').textContent='Bu akoru tanımıyorum. Örnekler: D, Bm, F#m, G7, Cmaj7, Asus4, G/B.';return;}
   const v=voice(c,st.voicing);
   $('#ac-name').textContent=c.name;$('#ac-info').innerHTML=chordInfo(c).replace(/^<b>.*?<\/b>\s*/,'');$('#ac-kb').innerHTML=kbSVG(v.lh,v.rh);
-  segSync();
 }
-function playChord(name){const c=parseChord(name);if(!c)return;const v=voice(c,st.voicing);play([...v.lh,...v.rh].map(o=>o.m),1.4);}
+function playChordTool(){const c=parseChord(st.ac);if(c)playV(voice(c,st.voicing));}
 
 function newQ(){
   const clef=st.clef==='mix'?(Math.random()<.5?'sol':'fa'):st.clef,bd=clef==='sol'?30:18;let d;
@@ -530,47 +655,57 @@ function answer(l){
   save();renderTrainer();
 }
 
-function chordList(v){return String(v||'').split(/[\s,|]+/).map(x=>x.trim()).filter(Boolean);}
+function reqText(){
+  const t=$('#r-title').value.trim(),a=$('#r-artist').value.trim();
+  return `Piyano Defteri şarkı isteği\nŞarkı: ${t}\nSanatçı: ${a||'-'}\nAkorlarını internetten bul; söz yazmadan, bölüm bölüm şu biçimde ver:\n#PIYANO\nŞarkı: …\nSanatçı: …\nTon: …\nKaynak: …\n[Bölüm adı]\nD Bm | G A Bm`;
+}
+function updateReq(){$('#r-wa').href='https://wa.me/?text='+encodeURIComponent(reqText());}
+function seqText(s){return s.sections.length?s.sections.map(x=>'['+x.n+']\n'+x.c.split('|').map(t=>t.trim()).filter(Boolean).join('\n')).join('\n'):s.chords.join(' ');}
 function updateLinks(){
   const q=($('#f-title').value+' '+$('#f-artist').value).trim();
   $('#q-g').href='https://www.google.com/search?q='+encodeURIComponent((q||'piano')+' chords');
   $('#q-u').href='https://www.ultimate-guitar.com/search.php?search_type=title&value='+encodeURIComponent(q);
 }
 function updateCprev(){
-  const list=chordList($('#f-chords').value);
+  const list=[...new Set(String($('#f-seq').value).split('\n').filter(l=>!/^\s*\[.*\]\s*$/.test(l)).flatMap(tokens))];
   $('#c-prev').innerHTML=list.map(c=>`<span class="${parseChord(c)?'':'bad'}">${esc(c)}</span>`).join('');
   const bad=list.filter(c=>!parseChord(c));const e=$('#e-chords');e.hidden=!bad.length;e.textContent=bad.length?'Tanınmayan akor: '+bad.join(', ')+'. Örnek yazım: F#m, Bb, G7, Cmaj7, G/B.':'';
 }
 function fillForm(s){
-  st.edit=s?s.id:null;$('#f-head').textContent=s?'Şarkıyı düzenle':'Yeni şarkı';$('#f-cancel').hidden=!s;
-  $('#f-title').value=s?s.title:'';$('#f-artist').value=s?s.artist:'';$('#f-key').value=s?s.key:'';
-  $('#f-chords').value=s?s.chords.join(' '):'';$('#f-mel').value=s?s.melody:'';$('#f-notes').value=s?s.notes:'';
+  st.edit=s?s.id:null;$('#f-head').textContent=s?'Şarkıyı düzenle: '+s.title:'Elle ekle veya düzenle';$('#f-cancel').hidden=!s;
+  $('#f-title').value=s?s.title:'';$('#f-artist').value=s?s.artist:'';$('#f-key').value=s?s.key:'';$('#f-src').value=s?s.src:'';
+  $('#f-seq').value=s?seqText(s):'';$('#f-mel').value=s?s.melody:'';$('#f-notes').value=s?s.notes:'';
   ['#e-title','#e-mel'].forEach(k=>{$(k).hidden=true;});updateCprev();updateLinks();
+  if(s)$('#manual').open=true;
 }
 function saveForm(){
   const title=$('#f-title').value.trim();const et=$('#e-title');
   if(!title){et.hidden=false;et.textContent='Şarkı adını yaz.';$('#f-title').focus();return;}
   const mel=$('#f-mel').value.trim(),mp=parseMelody(mel),em=$('#e-mel');
   if(mp.errs.length){em.hidden=false;em.textContent='Okunamayan melodi parçaları: '+mp.errs.join(' ')+'. Örnek: C4 D4:2 E4:0.5 R:1 |';return;}
-  const o=clean({id:st.edit||newId(),title,artist:$('#f-artist').value.trim(),key:$('#f-key').value.trim(),chords:chordList($('#f-chords').value),melody:mel,notes:$('#f-notes').value.trim()});
+  const lines=$('#f-seq').value.split('\n').map(l=>l.trim()).filter(Boolean);
+  const sections=parseSections(lines.map(l=>/^\[.*\]$/.test(l)?l:l),[]);
+  const old=st.edit?getSong(st.edit):null;
+  const o=clean({id:st.edit||newId(),title,artist:$('#f-artist').value.trim(),key:$('#f-key').value.trim(),src:$('#f-src').value.trim(),sections,melody:mel,notes:$('#f-notes').value.trim(),level:old?old.level:'bas',easy:old?old.easy:true});
+  if(!o.sections.length&&!o.melody&&lines.length){const e=$('#e-chords');e.hidden=false;e.textContent='Akor satırı okunamadı. Örnek: D Bm | G A';return;}
   const i=DB.songs.findIndex(s=>s.id===o.id);if(i>=0)DB.songs[i]=o;else DB.songs.unshift(o);
-  save();st.song=o.id;st.tr=0;st.chord=0;st.focus='chord';st.mi=-1;st.edit=null;setTab('sarkilar');
+  save();st.edit=null;$('#manual').open=false;openSong(o.id);
 }
 async function copyOut(txt,box,msg){
   box.hidden=false;box.value=txt;msg.className='msg';
   try{await navigator.clipboard.writeText(txt);msg.textContent='Kopyalandı. WhatsApp\'a yapıştırabilirsin.';}
   catch(e){box.focus();box.select();msg.className='msg bad';msg.textContent='Otomatik kopyalanamadı. Kutudaki metni seçip kopyala.';}
 }
-function doImport(){
+function doImport(txt){
   const msg=$('#imp-msg');msg.className='msg';
   try{
-    const list=readCode($('#imp').value);if(!list.length)throw new Error('empty');
-    const sig=s=>[s.title,s.artist,s.chords.join(' '),s.melody].join('|');const have=new Set(DB.songs.map(sig));
+    const list=parseIncoming(txt);if(!list.length)throw new Error('empty');
+    const sig=s=>[s.title,s.artist,s.chords.join(' '),s.sections.map(x=>x.c).join('/'),s.melody].join('|');const have=new Set(DB.songs.map(sig));
     const fresh=list.filter(s=>!have.has(sig(s)));
-    fresh.reverse().forEach(s=>DB.songs.unshift(s));save();$('#imp').value='';
-    msg.textContent=fresh.length?`${fresh.length} şarkı eklendi${list.length>fresh.length?`, ${list.length-fresh.length} tanesi zaten vardı`:''}.`:'Bu şarkılar zaten defterde.';
-    if(fresh.length===1){st.song=fresh[0].id;st.tr=0;st.chord=0;st.focus='chord';st.mi=-1;setTimeout(()=>setTab('sarkilar'),600);}
-  }catch(e){msg.className='msg bad';msg.textContent='Kod okunamadı. PD1: ile başlayan kodun tamamını yapıştır.';}
+    fresh.slice().reverse().forEach(s=>DB.songs.unshift(s));save();$('#imp').value='';
+    msg.textContent=fresh.length?`${fresh.length} şarkı eklendi${list.length>fresh.length?`, ${list.length-fresh.length} tanesi zaten vardı`:''}.`:'Bu şarkı zaten defterde.';
+    if(fresh.length===1)setTimeout(()=>openSong(fresh[0].id),500);
+  }catch(e){msg.className='msg bad';msg.textContent='Metin okunamadı. #PIYANO ile başlayan metnin tamamını yapıştır.';}
 }
 
 document.addEventListener('click',e=>{
@@ -578,33 +713,44 @@ document.addEventListener('click',e=>{
   if(nt){stopPlay();stepTo(+nt.dataset.n,true);return;}
   const sb=e.target.closest('[data-seg] button');
   if(sb){const k=sb.parentElement.dataset.seg;st[k]=sb.dataset.v;segSync();
-    if(k==='voicing'){if(st.tab==='akor'){renderAkor();playChord(st.ac);}else{st.focus='chord';updateKb();const s=getSong(st.song);if(s&&s.chords[st.chord])playChord(trChord(s.chords[st.chord],st.tr));}}
+    if(k==='voicing'){renderAkor();playChordTool();}
     if(k==='clef'){clearTimeout(st.tTimer);st.tq=newQ();const f=$('#t-fb');f.className='fb';f.textContent='Portedeki nota hangisi? Aşağıdan seç.';renderTrainer();}
     return;}
+  const wa=e.target.closest('#r-wa');
+  if(wa){if(!$('#r-title').value.trim()){e.preventDefault();$('#e-r').hidden=false;$('#r-title').focus();}else updateReq();return;}
   const tb=e.target.closest('[data-tab]');
   if(tb){if(tb.dataset.tab==='sarkilar'&&st.tab==='sarkilar'){st.song=null;stopPlay();}setTab(tb.dataset.tab);return;}
   const b=e.target.closest('[data-act]');if(!b)return;
   const a=b.dataset.act,s=getSong(st.song);
-  if(a==='open'){st.song=b.dataset.id;st.tr=0;st.chord=0;st.focus='chord';st.mi=-1;st.del=false;renderSong();window.scrollTo(0,0);}
+  if(a==='open'){openSong(b.dataset.id);}
   else if(a==='list'){stopPlay();st.song=null;renderList();window.scrollTo(0,0);}
-  else if(a==='tr'){st.tr=Math.max(-11,Math.min(11,st.tr+(+b.dataset.d)));stopPlay();renderSong();if(s&&s.chords.length&&st.focus==='chord')playChord(trChord(s.chords[st.chord],st.tr));}
+  else if(a==='lvl'&&s){s.level=b.dataset.v;save();stopPlay();st.pos=Math.min(st.pos,9999);renderSong();const n=curChord();if(n)playName(n,s.level);}
+  else if(a==='tr'&&s){st.tr=Math.max(-11,Math.min(11,st.tr+(+b.dataset.d)));stopPlay();renderSong();const n=curChord();if(n)playName(n,s.level);}
   else if(a==='tr0'){st.tr=0;stopPlay();renderSong();}
-  else if(a==='chord'){stopPlay();st.focus='chord';st.chord=+b.dataset.i;updateKb();if(st.items.length)drawStaff();if(s)playChord(trChord(s.chords[st.chord],st.tr));}
+  else if(a==='chord'&&s){stopPlay();st.focus='chord';st.chord=+b.dataset.i;updateKb();if(st.items.length)drawStaff();playName(st.uniq[st.chord],s.level);}
+  else if(a==='seq'){stopPlay();seqGo(+b.dataset.p,false);}
+  else if(a==='snext'){seqGo(st.focus==='seq'?st.pos+1:st.pos,true);}
+  else if(a==='sprev'){seqGo(st.pos-1,true);}
+  else if(a==='s0'){seqGo(0,true);}
   else if(a==='mplay'){if(st.playing){stopPlay();}else{ac();const idx=noteIdx();if(st.focus!=='note'||st.mi>=idx[idx.length-1])st.mi=-1;st.playing=true;b.textContent='Durdur';tick();}}
   else if(a==='mnext'||a==='mprev'){stopPlay();const idx=noteIdx();if(!idx.length)return;let p=st.focus==='note'?idx.indexOf(st.mi):-1;p=a==='mnext'?Math.min(idx.length-1,p+1):Math.max(0,p-1);stepTo(idx[p],true);}
-  else if(a==='code'&&s){copyOut(songCode(s),$('#codebox'),$('#codemsg'));}
-  else if(a==='edit'&&s){stopPlay();setTab('ekle',true);fillForm(s);}
+  else if(a==='code'&&s){copyOut(songText(s),$('#codebox'),$('#codemsg'));}
+  else if(a==='edit'&&s){stopPlay();setTab('ekle',true);updateReq();fillForm(s);setTimeout(()=>$('#manual').scrollIntoView({block:'start'}),50);}
   else if(a==='del'){$('#delbox').innerHTML=`<div class="confirm"><span>Bu şarkı silinsin mi?</span><button class="btn pri sm" data-act="del-yes">Evet, sil</button><button class="btn sm" data-act="del-no">Vazgeç</button></div>`;}
   else if(a==='del-no'){$('#delbox').innerHTML='';}
   else if(a==='del-yes'){DB.songs=DB.songs.filter(x=>x.id!==st.song);save();st.song=null;stopPlay();renderList();window.scrollTo(0,0);}
-  else if(a==='ac-root'){const c=parseChord(st.ac);st.ac=b.dataset.r+(c&&!c.bass?c.suf:'');renderAkor();playChord(st.ac);}
-  else if(a==='ac-type'){const c=parseChord(st.ac);st.ac=(c?NAMES[c.root.pc]:'C')+b.dataset.t;renderAkor();playChord(st.ac);}
-  else if(a==='ac-play'){playChord(st.ac);}
+  else if(a==='ac-root'){const c=parseChord(st.ac);st.ac=b.dataset.r+(c&&!c.bass?c.suf:'');renderAkor();playChordTool();}
+  else if(a==='ac-type'){const c=parseChord(st.ac);st.ac=(c?NAMES[c.root.pc]:'C')+b.dataset.t;renderAkor();playChordTool();}
+  else if(a==='ac-play'){playChordTool();}
   else if(a==='ans'){answer(b.dataset.l);}
   else if(a==='t-next'){clearTimeout(st.tTimer);st.tq=newQ();const f=$('#t-fb');f.className='fb';f.textContent='Portedeki nota hangisi? Aşağıdan seç.';renderTrainer();}
   else if(a==='t-reset'){Object.assign(DB.stats,{ok:0,total:0,streak:0,best:0});save();renderTrainer();}
-  else if(a==='f-cancel'){const id=st.edit;fillForm(null);if(id){st.song=id;setTab('sarkilar');}}
-  else if(a==='import'){doImport();}
+  else if(a==='r-copy'){if(!$('#r-title').value.trim()){$('#e-r').hidden=false;$('#r-title').focus();return;}copyOut(reqText(),$('#r-box'),$('#r-msg'));}
+  else if(a==='paste'){const msg=$('#imp-msg');
+    if(!navigator.clipboard||!navigator.clipboard.readText){msg.className='msg bad';msg.textContent='Bu telefonda otomatik yapıştırma yok. Kutuya uzun bas → Yapıştır, sonra Şarkıyı ekle.';return;}
+    navigator.clipboard.readText().then(t=>{$('#imp').value=t;doImport(t);}).catch(()=>{msg.className='msg bad';msg.textContent='Panoya erişilemedi. Kutuya uzun bas → Yapıştır, sonra Şarkıyı ekle.';});}
+  else if(a==='import'){doImport($('#imp').value);}
+  else if(a==='f-cancel'){const id=st.edit;fillForm(null);$('#manual').open=false;if(id)openSong(id);}
   else if(a==='backup'){copyOut(backupCode(),$('#bk'),$('#bk-msg'));}
 });
 document.addEventListener('input',e=>{
@@ -612,12 +758,16 @@ document.addEventListener('input',e=>{
   if(id==='q'){st.q=e.target.value;$('#slist').innerHTML=listHTML();}
   else if(id==='bpm'){st.bpm=+e.target.value;$('#bpmo').textContent=st.bpm;}
   else if(id==='ac-in'){const v=e.target.value.trim();if(v){st.ac=v;renderAkor();}}
+  else if(id==='r-title'||id==='r-artist'){$('#e-r').hidden=true;updateReq();}
   else if(id==='f-title'){$('#e-title').hidden=true;updateLinks();}
   else if(id==='f-artist'){updateLinks();}
-  else if(id==='f-chords'){updateCprev();}
+  else if(id==='f-seq'){updateCprev();}
   else if(id==='f-mel'){$('#e-mel').hidden=true;}
 });
-document.addEventListener('change',e=>{if(e.target.id==='names'){st.names=e.target.checked;drawStaff();}});
+document.addEventListener('change',e=>{
+  if(e.target.id==='names'){st.names=e.target.checked;drawStaff();}
+  if(e.target.id==='easy'){const s=getSong(st.song);if(s){s.easy=e.target.checked;save();stopPlay();renderSong();const n=curChord();if(n)playName(n,s.level);}}
+});
 $('#sform').addEventListener('submit',e=>{e.preventDefault();saveForm();});
 window.addEventListener('hashchange',()=>{const t=location.hash.slice(1);if(SUB[t]&&t!==st.tab)setTab(t);});
 
