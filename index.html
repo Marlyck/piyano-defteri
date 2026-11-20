@@ -77,6 +77,14 @@ h3{font-size:17px;margin:22px 0 8px}
 .sc{min-width:50px;min-height:44px;padding:4px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font:700 18px/1 "Playfair Display",Georgia,serif;scroll-margin-top:300px;scroll-margin-bottom:90px}
 .sc.on{background:var(--felt);border-color:var(--felt);color:#fff}
 .staff{width:100%;overflow:hidden;margin-top:6px}
+.lyl{display:flex;flex-wrap:wrap;align-items:flex-end;margin:0 0 10px;font-size:17px;line-height:1.3}
+.cp{display:inline-flex;flex-direction:column;align-items:flex-start}
+.cp .sc{min-height:40px;min-width:44px;font-size:16px;padding:2px 8px;margin:0 4px 3px 0}
+.cp .gap{height:43px}
+.cp .tx{white-space:pre;padding-right:2px}
+.syl{fill:var(--ink);font-size:13px;font-style:italic}
+.cur .syl{fill:var(--felt)}
+.snd{font-size:13px;color:var(--muted)}
 .staff svg{display:block}
 .sl{stroke:var(--staff);stroke-width:1}
 .bl{stroke:var(--ink);stroke-width:3}
@@ -233,14 +241,16 @@ details.more summary{min-height:44px;display:flex;align-items:center;font-weight
         <label class="fl2" for="f-key">Ton <small>(isteğe bağlı)</small></label>
         <input id="f-key" type="text" autocomplete="off" autocapitalize="off" placeholder="D">
         <label class="fl2" for="f-seq">Akor sırası</label>
-        <textarea id="f-seq" spellcheck="false" autocapitalize="off" placeholder="[Kıta]&#10;D Bm | G A Bm&#10;[Nakarat]&#10;G D | A D"></textarea>
-        <p class="hint">Bölüm adı köşeli parantezde, her satır bir akor satırı. Bölüm yazmazsan hepsi tek bölüm olur.</p>
+        <textarea id="f-seq" spellcheck="false" autocapitalize="off" placeholder="[Kıta]&#10;D Bm | G A Bm&#10;[Nakarat]&#10;[C]Twin-kle twin-kle [F]lit-tle [C]star"></textarea>
+        <p class="hint">Bölüm adı köşeli parantezde, her satır bir akor satırı. Sözlü satırda akoru basılacağı hecenin önüne yaz: [C]Twin-kle [F]lit-tle. Bölüm yazmazsan hepsi tek bölüm olur.</p>
         <div class="cprev" id="c-prev"></div>
         <p class="err" id="e-chords" hidden></p>
         <label class="fl2" for="f-mel">Melodi <small>(isteğe bağlı)</small></label>
         <textarea id="f-mel" spellcheck="false" autocapitalize="off" placeholder="C4 C4 G4 G4 | A4 A4 G4:2"></textarea>
         <p class="hint">Nota + oktav, iki nokta, vuruş: C4 = 1 vuruş, G4:2 = 2 vuruş, E4:0.5 = yarım vuruş, D4:1.5 = noktalı. Sus: R:1. Ölçü çizgisi: |</p>
         <p class="err" id="e-mel" hidden></p>
+        <label class="fl2" for="f-syl">Melodi heceleri <small>(isteğe bağlı, her notaya bir hece, _ = uzatma)</small></label>
+        <textarea id="f-syl" style="font-family:inherit;font-size:16px" placeholder="Twin- kle twin- kle lit- tle star"></textarea>
         <label class="fl2" for="f-src">Kaynak <small>(isteğe bağlı)</small></label>
         <input id="f-src" type="text" autocomplete="off" autocapitalize="off">
         <label class="fl2" for="f-notes">Not <small>(isteğe bağlı)</small></label>
@@ -257,7 +267,7 @@ details.more summary{min-height:44px;display:flex;align-items:center;font-weight
       <p class="msg" id="bk-msg"></p>
     </details>
   </section>
-  <p class="hint" style="margin-top:28px">Piyano sesi: Salamander Grand Piano, Alexander Holm (CC BY 3.0).</p>
+  <p class="hint" style="margin-top:28px">Piyano sesi: Salamander Grand Piano, Alexander Holm (CC BY 3.0). · Sürüm 5 (20.11.2026)</p>
 </main>
 
 <nav class="tabs" aria-label="Bölümler">
@@ -283,15 +293,18 @@ const TYPES=[['','Majör'],['m','Minör'],['7','7'],['maj7','maj7'],['m7','m7'],
 const LVL={bas:'Başlangıç',orta:'Orta',ileri:'İleri'};
 const LVLHINT={bas:'Sağ el: akor değişince üç notaya birlikte bas, değişene kadar tut. Sol el çalmaz.',orta:'Sol el: ölçü başında kök nota. Sağ el: kalan vuruşlarda akoru bas.',ileri:'Sol el: kök nota ve bir oktav aşağısı. Sağ el: akor notalarını alttan üste tek tek çal (arpej). 7\'li ve slash akorlar tam haliyle.'};
 const ODE='E4 E4 F4 G4 | G4 F4 E4 D4 | C4 C4 D4 E4 | E4:1.5 D4:0.5 D4:2 | E4 E4 F4 G4 | G4 F4 E4 D4 | C4 C4 D4 E4 | D4:1.5 C4:0.5 C4:2 | D4 D4 E4 C4 | D4 E4:0.5 F4:0.5 E4 C4 | D4 E4:0.5 F4:0.5 E4 D4 | C4 D4 G3:2 | E4 E4 F4 G4 | G4 F4 E4 D4 | C4 C4 D4 E4 | D4:1.5 C4:0.5 C4:2';
+const ODEH='Freu- de, schö- ner Göt- ter- fun- ken, Toch- ter aus E- ly- si- um, wir be- tre- ten feu- er- trun- ken, Himm- li- sche, dein Hei- lig- tum! Dei- ne Zau- ber bin- den _ wie- der, was die _ Mo- de streng ge- teilt; al- le Men- schen wer- den Brü- der, wo dein sanf- ter Flü- gel weilt.';
+const TWH='Twin- kle twin- kle lit- tle star, how I won- der what you are. Up a- bove the world so high, like a dia- mond in the sky. Twin- kle twin- kle lit- tle star, how I won- der what you are.';
+const TWA=['[C]Twin-kle twin-kle [F]lit-tle [C]star,','[F]how I [C]won-der [G]what you [C]are.'],TWB=['[C]Up a-[F]bove the [C]world so [G]high,','[C]like a [F]dia-mond [C]in the [G]sky.'];
 const TW='C4 C4 G4 G4 | A4 A4 G4:2 | F4 F4 E4 E4 | D4 D4 C4:2 | G4 G4 F4 F4 | E4 E4 D4:2 | G4 G4 F4 F4 | E4 E4 D4:2 | C4 C4 G4 G4 | A4 A4 G4:2 | F4 F4 E4 E4 | D4 D4 C4:2';
 const MCV='D Bm | D Bm | D Bm | G A Bm',MCA='G D G D | G D Bm | G A D G | D G A D',MCN='D F#m | G D | Bm Em | F#m Bm';
 const SEEDS=[
  {id:'masters-call',title:"Master's Call",artist:'Marty Robbins',key:'D',level:'bas',easy:true,src:'chords-and-tabs.net (iki ayrı akor kağıdı karşılaştırıldı)',melody:'',
   sections:[{n:'Kıta 1',c:'D Bm | A D Bm | D Bm | G A Bm'},{n:'Kıta 2',c:MCV},{n:'Ara',c:MCA},{n:'Nakarat',c:MCN},{n:'Kıta 3',c:MCV},{n:'Ara',c:MCA},{n:'Nakarat',c:MCN},{n:'Kıta 4',c:MCV},{n:'Kıta 5',c:MCV}],
   notes:"Telifli şarkı (Marty Robbins, 1959): söz ve melodi yok, sadece akor sırası.\nKayıt Eb tonunda (D şekilleri capo 1). Kayıtla birlikte çalmak için Orta veya İleri seç, Ton kaydır +1.\nKaynaklar nakaratın son satırında ayrılıyor: biri 'A F#m Bm', diğeri 'F#m Bm' yazıyor."},
- {id:'ode-to-joy',title:'Neşeye Övgü (Ode to Joy)',artist:'L. v. Beethoven, 1824',key:'C',level:'bas',easy:true,src:'',chords:['C','G'],sections:[],melody:ODE,notes:'Kamu malı. 4/4.\nSağ el 5 parmak: başparmak C4, serçe G4. 12. ölçüdeki alçak G (G3) için el aşağı kayar.\nSol el için basit eşlik: C ve G.'},
+ {id:'ode-to-joy',title:'Neşeye Övgü (Ode to Joy)',artist:'L. v. Beethoven, 1824',key:'C',level:'bas',easy:true,src:'',chords:['C','G'],sections:[],melody:ODE,syl:ODEH,notes:'Kamu malı. 4/4. Söz: Friedrich Schiller, An die Freude (1785).\nSağ el 5 parmak: başparmak C4, serçe G4. 12. ölçüdeki alçak G (G3) için el aşağı kayar.\nSol el için basit eşlik: C ve G.'},
  {id:'twinkle',title:'Küçük Yıldız (Twinkle Twinkle)',artist:'Geleneksel, 18. yy Fransız ezgisi',key:'C',level:'bas',easy:true,src:'',melody:TW,
-  sections:[{n:'A',c:'C F C | F C G C'},{n:'B',c:'C F C G | C F C G'},{n:'A',c:'C F C | F C G C'}],notes:'Kamu malı. 4/4.\nİlk melodi için en kolayı: sağ el C4–A4 arası, başparmak C4.'}
+  syl:TWH,sections:[{n:'A',c:'',ly:TWA},{n:'B',c:'',ly:TWB},{n:'A',c:'',ly:TWA}],notes:'Kamu malı. 4/4. Söz: Jane Taylor (1806).\nİlk melodi için en kolayı: sağ el C4–A4 arası, başparmak C4.'}
 ];
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -368,7 +381,7 @@ function parseMelody(s){
 }
 function trMel(items,n){if(!n)return items;return items.map(it=>{if(it.t!=='n')return it;const mm=it.midi+n,s=SHARP[((mm%12)+12)%12];return {...it,l:s[0],a:s[1]||'',o:Math.floor(mm/12)-1,midi:mm};});}
 
-function noteG(it,i,x,by,cur,names){
+function noteG(it,i,x,by,cur,names,sy){
   const hit=`<rect class="hit" x="${x-13}" y="${by-62}" width="26" height="104"/>`;
   if(it.t==='r'){const y=by-20;const g=it.b>=2?`<rect class="rr" x="${x-6}" y="${it.b>=4?y-10:y-5}" width="12" height="5"/>`:`<path class="rs" d="M${x-3} ${y-12} l6 7 l-5 5 l6 7 M${x+3} ${y+7} q-8 -2 -4 6"/>`;
     return `<g class="nt${cur?' cur':''}" data-n="${i}">${g}${hit}</g>`;}
@@ -383,13 +396,15 @@ function noteG(it,i,x,by,cur,names){
   if([1.5,3,0.75].includes(it.b))s+=`<circle class="dt" cx="${x+10}" cy="${y+(p%2===0?-3:0)}" r="1.9"/>`;
   if(it.a)s+=`<text class="ac" x="${x-19}" y="${y+5}">${accSym(it.a)}</text>`;
   if(names)s+=`<text class="nn" x="${x}" y="${by+46}" text-anchor="middle">${it.l}${accSym(it.a)}</text><text class="nn2" x="${x}" y="${by+61}" text-anchor="middle">${SOL[it.l]}</text>`;
+  if(sy&&sy!=='_')s+=`<text class="syl" x="${x}" y="${by+(names?82:46)}" text-anchor="middle">${esc(sy)}</text>`;
   return `<g class="nt${cur?' cur':''}" data-n="${i}">${s}${hit}</g>`;
 }
-function melodySVG(items,W,cur,names){
-  const x0=8,top=30,sysH=names?140:110,ms=[];let cm=[];
+function melodySVG(items,W,cur,names,syl){
+  syl=syl||{};const hasSyl=Object.keys(syl).length>0;
+  const x0=8,top=30,sysH=(names?140:110)+(hasSyl?(names?24:14):0),ms=[];let cm=[];
   items.forEach((it,i)=>{if(it.t==='bar'){if(cm.length){ms.push(cm);cm=[];}}else cm.push(i);});
   if(cm.length)ms.push(cm);
-  const nw=it=>24+9*Math.min(it.b,4)+(it.a?12:0);
+  const nw=it=>Math.max(24+9*Math.min(it.b,4)+(it.a?12:0),syl[items.indexOf(it)]?8+String(syl[items.indexOf(it)]).length*7.2:0);
   const sys=[[]];let x=x0;
   ms.forEach(m=>{const w=m.reduce((a,i)=>a+nw(items[i]),0)+12;if(x+w>W-4&&x>x0){sys.push([]);x=x0;}sys[sys.length-1].push({m,x,w});x+=w;});
   let out='';
@@ -399,7 +414,7 @@ function melodySVG(items,W,cur,names){
     for(let k=0;k<5;k++)out+=`<line class="sl" x1="${x0-4}" x2="${end}" y1="${by-k*10}" y2="${by-k*10}"/>`;
     out+=`<line class="sl" x1="${x0-4}" x2="${x0-4}" y1="${by-40}" y2="${by}"/>`;
     row.forEach(({m,x,w},k)=>{
-      let nx=x+8;m.forEach(i=>{const it=items[i];out+=noteG(it,i,nx+(it.a?12:0)+8,by,i===cur,names);nx+=nw(it);});
+      let nx=x+8;m.forEach(i=>{const it=items[i];out+=noteG(it,i,nx+(it.a?12:0)+8,by,i===cur,names,syl[i]);nx+=nw(it);});
       const last=r===sys.length-1&&k===row.length-1;
       out+=last?`<line class="sl" x1="${x+w-6}" x2="${x+w-6}" y1="${by-40}" y2="${by}"/><line class="bl" x1="${x+w-1.5}" x2="${x+w-1.5}" y1="${by-40}" y2="${by}"/>`:`<line class="sl" x1="${x+w}" x2="${x+w}" y1="${by-40}" y2="${by}"/>`;
     });
@@ -413,10 +428,11 @@ function loadPiano(a){
   if(PLOAD)return;PLOAD=true;let raw={};
   try{raw=JSON.parse(document.getElementById('pianodata').textContent);}catch(e){return;}
   const bufs={},keys=Object.keys(raw);let left=keys.length;
-  const done=()=>{if(--left<=0&&Object.keys(bufs).length)PIANO=bufs;};
+  const done=()=>{left--;if(Object.keys(bufs).length)PIANO=bufs;const e=document.getElementById('snd');if(e)e.textContent=sndText();};
   keys.forEach(k=>{try{const bin=atob(raw[k]),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
     const p=a.decodeAudioData(u.buffer,b=>{bufs[k]=b;done();},()=>done());if(p&&p.catch)p.catch(()=>{});}catch(e){done();}});
 }
+function sndText(){const n=PIANO?Object.keys(PIANO).length:0;return n>=17?'Ses: gerçek piyano':n?'Ses: piyano yükleniyor…':(PLOAD?'Ses: piyano yükleniyor…':'Ses: ilk dokunuşta piyano yüklenir');}
 function ac(){try{if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();}if(AC.state==='suspended')AC.resume();loadPiano(AC);return AC;}catch(e){return null;}}
 function nearest(m){let best=null,bd=99;Object.keys(PIANO).forEach(k=>{const d=Math.abs(m-k);if(d<bd){bd=d;best=+k;}});return best;}
 function play(midis,dur,delay){
@@ -439,21 +455,26 @@ function playV(v){
 }
 
 const KEY='piyanoDefteri.v1';
-const DB={ver:2,songs:[],stats:{ok:0,total:0,streak:0,best:0}};
-function cleanSections(a){return Array.isArray(a)?a.filter(x=>x&&typeof x.n==='string'&&typeof x.c==='string'&&tokens(x.c).length).slice(0,60).map(x=>({n:x.n.trim().slice(0,40)||'Bölüm',c:x.c.slice(0,600)})):[];}
+const DB={ver:3,songs:[],stats:{ok:0,total:0,streak:0,best:0}};
+const CPRE=/\[([^\]]+)\]/g;
+function isCP(l){if(/^\[[^\]]+\]$/.test(l))return false;const ch=[...l.matchAll(CPRE)].map(m=>m[1].trim());return ch.length>0&&ch.every(c=>parseChord(c))&&l.replace(CPRE,'').trim().length>0;}
+function cpChords(l){return [...l.matchAll(CPRE)].map(m=>m[1].trim());}
+function cpSegs(l){const out=[];let last=0,ch=null;l.replace(CPRE,(m,c,i)=>{const tx=l.slice(last,i);if(ch!==null||tx)out.push({ch,tx});ch=c.trim();last=i+m.length;return m;});out.push({ch,tx:l.slice(last)});return out.filter(s=>s.ch!==null||s.tx);}
+function fixSec(x){if(Array.isArray(x.ly)&&x.ly.length){const ly=x.ly.filter(s=>typeof s==='string'&&s.trim()).slice(0,60).map(s=>s.slice(0,240));return {n:x.n,c:ly.map(l=>cpChords(l).join(' ')).filter(Boolean).join(' | '),ly};}return {n:x.n,c:x.c};}
+function cleanSections(a){a=Array.isArray(a)?a.filter(x=>x&&typeof x.n==='string').map(fixSec):[];return a.filter(x=>typeof x.c==='string'&&tokens(x.c).length).slice(0,60).map(x=>{const o={n:x.n.trim().slice(0,40)||'Bölüm',c:x.c.slice(0,600)};if(x.ly)o.ly=x.ly;return o;});}
 function clean(o){
   if(!o||typeof o!=='object'||typeof o.title!=='string'||!o.title.trim())return null;
   const sections=cleanSections(o.sections);
   let chords=Array.isArray(o.chords)?o.chords.filter(x=>typeof x==='string').map(x=>x.trim().slice(0,12)).filter(Boolean).slice(0,64):[];
   if(sections.length)chords=[...new Set(sections.flatMap(s=>tokens(s.c)))].slice(0,64);
   return {id:typeof o.id==='string'&&o.id?o.id.slice(0,40):newId(),title:o.title.trim().slice(0,120),artist:str(o.artist,120).trim(),key:str(o.key,12).trim(),
-    chords,sections,melody:str(o.melody,6000),notes:str(o.notes,2000),src:str(o.src,300).trim(),
+    chords,sections,melody:str(o.melody,6000),syl:str(o.syl,4000).trim(),notes:str(o.notes,2000),src:str(o.src,300).trim(),
     level:['bas','orta','ileri'].includes(o.level)?o.level:'bas',easy:o.easy!==false};
 }
 function load(){
   try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);if(o&&Array.isArray(o.songs)){
     DB.songs=o.songs.map(clean).filter(Boolean);if(o.stats)Object.assign(DB.stats,o.stats);
-    if((o.ver||1)<2){SEEDS.forEach(sd=>{const i=DB.songs.findIndex(s=>s.id===sd.id);if(i>=0&&!DB.songs[i].sections.length)DB.songs[i]=clean(sd);});DB.ver=2;save();}
+    const v=o.ver||1;if(v<3){SEEDS.forEach(sd=>{const i=DB.songs.findIndex(s=>s.id===sd.id);if(i<0)return;const cur=DB.songs[i];if((v<2&&!cur.sections.length)||(!cur.syl&&sd.syl)){const n=clean(sd);n.level=cur.level;n.easy=cur.easy;DB.songs[i]=n;}});DB.ver=3;save();}
     return;}}}catch(e){}
   DB.songs=SEEDS.map(clean);save();
 }
@@ -464,25 +485,28 @@ const backupCode=()=>'PDY1:'+enc(DB.songs.map(({id,...r})=>r));
 function songText(s){
   const L=['#PIYANO','Şarkı: '+s.title];
   if(s.artist)L.push('Sanatçı: '+s.artist);if(s.key)L.push('Ton: '+s.key);if(s.src)L.push('Kaynak: '+s.src);
-  if(s.sections.length)s.sections.forEach(x=>{L.push('['+x.n+']');x.c.split('|').map(t=>t.trim()).filter(Boolean).forEach(t=>L.push(t));});
+  if(s.sections.length)s.sections.forEach(x=>{L.push('['+x.n+']');(x.ly?x.ly.map(t=>t.replace(CPRE,'').trim()?t:cpChords(t).join(' ')):x.c.split('|').map(t=>t.trim()).filter(Boolean)).forEach(t=>L.push(t));});
   else if(s.chords.length)L.push('[Akorlar]',s.chords.join(' '));
-  if(s.melody)L.push('Melodi: '+s.melody.replace(/\s+/g,' ').trim());
+  if(s.melody)L.push('Melodi: '+s.melody.replace(/\s+/g,' ').trim());if(s.syl)L.push('Hece: '+s.syl.replace(/\s+/g,' ').trim());
   if(s.notes)s.notes.split('\n').filter(x=>x.trim()).forEach(x=>L.push('Not: '+x.trim()));
   return L.join('\n');
 }
 function chordLine(l){const t=tokens(l);if(!t.length)return false;return t.filter(x=>parseChord(x)).length/t.length>=0.6;}
 function parseSections(lines,into){
   let cur=null;
-  lines.forEach(l=>{let m=/^\[(.+)\]$/.exec(l);
-    if(m){cur={n:m[1].trim(),c:[]};into.push(cur);return;}
-    if(chordLine(l)){if(!cur){cur={n:'Akorlar',c:[]};into.push(cur);}cur.c.push(l.replace(/\s*\|\s*$/,''));}
+  lines.forEach(l=>{
+    if(!/^\[[^\]]+\]$/.test(l)&&/\[/.test(l)&&!isCP(l)){const ch=cpChords(l);if(ch.length&&ch.every(c=>parseChord(c))&&!l.replace(CPRE,'').trim())l=ch.join(' ');}
+    let m=/^\[([^\]]+)\]$/.exec(l);
+    if(m&&!isCP(l)){cur={n:m[1].trim(),c:[],raw:[],cp:false};into.push(cur);return;}
+    const cp=isCP(l);
+    if(cp||chordLine(l)){if(!cur){cur={n:'Akorlar',c:[],raw:[],cp:false};into.push(cur);}if(cp)cur.cp=true;cur.raw.push(cp?l:l.replace(/\s*\|\s*$/,''));}
   });
-  return into.map(x=>({n:x.n,c:x.c.join(' | ')}));
+  return into.map(x=>x.cp?fixSec({n:x.n,ly:x.raw.map(l=>isCP(l)?l:l.split('|').flatMap(tokens).map(t=>'['+t+']').join(' '))}):{n:x.n,c:x.raw.join(' | ')});
 }
 function parseText(txt){
   const raw=String(txt||'').replace(/\r/g,'').split('\n');
   let from=0;raw.forEach((l,i)=>{if(/^\s*[*_`]*#PIYANO/i.test(l))from=i+1;});
-  const o={title:'',artist:'',key:'',src:'',melody:'',notes:[]},secLines=[];
+  const o={title:'',artist:'',key:'',src:'',melody:'',syl:'',notes:[]},secLines=[];
   raw.slice(from).forEach(l0=>{
     const l=l0.replace(/^\s*(?:[-*•]\s+)?/,'').replace(/\*\*|__|`/g,'').trim();if(!l)return;
     let m;
@@ -491,6 +515,7 @@ function parseText(txt){
     else if(m=/^ton\s*:\s*(.*)$/iu.exec(l))o.key=m[1].trim().split(/\s/)[0]||'';
     else if(m=/^kaynak\s*:\s*(.*)$/iu.exec(l))o.src=m[1].trim();
     else if(m=/^melodi\s*:\s*(.*)$/iu.exec(l))o.melody=m[1].trim();
+    else if(m=/^hece\s*:\s*(.*)$/iu.exec(l))o.syl=m[1].trim();
     else if(m=/^not\s*:\s*(.*)$/iu.exec(l))o.notes.push(m[1].trim());
     else secLines.push(l);
   });
@@ -544,11 +569,18 @@ function songView(s){
   const uniq=[...new Set((s.sections.length?seq.map(x=>x.name):s.chords.map(disp)))];
   return {lvl,useEasy,shift,seq,uniq,key:s.key?trChord(s.key,shift):''};
 }
+function lyHTML(ly,g,v){
+  let li=0;
+  return ly.map(line=>{const ks=cpChords(line).length?(g.lines[li++]||[]):[];let j=0;
+    return `<div class="lyl">${cpSegs(line).map(sg=>{let top='<span class="gap"></span>';if(sg.ch!==null){const k=ks[j++];top=k===undefined?`<span class="gap"></span>`:`<button class="sc${parseChord(v.seq[k].name)?'':' bad'}" data-act="seq" data-p="${k}">${esc(v.seq[k].name)}</button>`;}
+      return `<span class="cp">${top}<span class="tx">${esc(sg.tx)||' '}</span></span>`;}).join('')}</div>`;}).join('');
+}
 function renderSong(){
   const s=getSong(st.song);if(!s){st.song=null;renderList();return;}
   const v=songView(s);st.seq=v.seq;st.uniq=v.uniq;st.shift=v.shift;
   if(st.pos>=v.seq.length)st.pos=0;if(st.chord>=v.uniq.length)st.chord=0;
   const mp=parseMelody(s.melody);st.items=trMel(mp.items,v.shift);
+  st.syl={};{const sy=(s.syl||'').split(/\s+/).filter(Boolean);let k=0;st.items.forEach((it,i)=>{if(it.t==='n'&&k<sy.length)st.syl[i]=sy[k++];});}
   const hasMel=st.items.some(it=>it.t!=='bar');
   if(st.focus==='seq'&&!v.seq.length)st.focus=v.uniq.length?'chord':'note';
   const groups=[];v.seq.forEach((x,k)=>{const g=groups[x.si]||(groups[x.si]={n:s.sections[x.si].n,lines:[]});(g.lines[x.li]=g.lines[x.li]||[]).push(k);});
@@ -565,10 +597,11 @@ function renderSong(){
   <p class="legend"><span><span class="sw lh"></span>Sol el</span><span><span class="sw rh"></span>Sağ el</span><span><span class="sw dot"></span>Orta Do (C4)</span></p></div></div>
   ${v.uniq.length?`<h3>Bu şarkıdaki akorlar <span class="f" style="font-weight:400">önce bunları çalış</span></h3><div class="chips" id="chips">${v.uniq.map((c,i)=>`<button class="chip${parseChord(c)?'':' bad'}" data-act="chord" data-i="${i}">${esc(c)}</button>`).join('')}</div>`:''}
   ${v.seq.length?`<h3>Akor sırası</h3><div class="row" style="margin-top:0"><button class="btn sm" data-act="sprev">◀ Önceki</button><button class="btn sm pri" data-act="snext">Sonraki ▶</button><button class="btn sm ghost" data-act="s0">Baştan</button></div>
-  <div class="secs" id="secs">${groups.filter(Boolean).map(g=>`<div class="sec"><h4>${esc(g.n)}</h4>${g.lines.filter(Boolean).map(l=>`<div class="sline">${l.map(k=>`<button class="sc${parseChord(v.seq[k].name)?'':' bad'}" data-act="seq" data-p="${k}">${esc(v.seq[k].name)}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}
+  <div class="secs" id="secs">${groups.map((g,si)=>!g?'':`<div class="sec"><h4>${esc(g.n)}</h4>${s.sections[si].ly?lyHTML(s.sections[si].ly,g,v):g.lines.filter(Boolean).map(l=>`<div class="sline">${l.map(k=>`<button class="sc${parseChord(v.seq[k].name)?'':' bad'}" data-act="seq" data-p="${k}">${esc(v.seq[k].name)}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}
   ${hasMel?`<h3>Melodi <span class="f" style="font-weight:400">sol anahtarı</span></h3>
   <div class="mctl"><button class="btn sm" data-act="mprev" aria-label="Önceki nota">◀</button><button class="btn sm pri" data-act="mplay" id="mplay">Çal</button><button class="btn sm" data-act="mnext" aria-label="Sonraki nota">▶</button>
   <input type="range" id="bpm" min="40" max="160" step="5" value="${st.bpm}" aria-label="Tempo"><span class="out" id="bpmo">${st.bpm}</span><span class="f">vuruş/dk</span></div>
+  <p class="snd" id="snd">${sndText()}</p>
   <label class="ck"><input type="checkbox" id="names" ${st.names?'checked':''}> Nota adlarını göster</label>
   <div class="staff" id="staff"></div><p class="hint">Bir notaya dokun: sesini duy, tuşunu gör. Ses gelmezse telefonun sessiz modunu kapat.</p>`:''}
   ${mp.errs.length?`<p class="err">Okunamayan melodi parçaları: ${esc(mp.errs.join(' '))}</p>`:''}
@@ -580,7 +613,7 @@ function renderSong(){
   const el=$('#staff');if(el){RO.disconnect();RO.observe(el);drawStaff();}
   updateKb();
 }
-function drawStaff(){const el=$('#staff');if(!el)return;const W=Math.max(240,el.clientWidth||340);st.lastW=el.clientWidth;el.innerHTML=melodySVG(st.items,W,st.focus==='note'?st.mi:-1,st.names);}
+function drawStaff(){const el=$('#staff');if(!el)return;const W=Math.max(240,el.clientWidth||340);st.lastW=el.clientWidth;el.innerHTML=melodySVG(st.items,W,st.focus==='note'?st.mi:-1,st.names,st.syl);}
 function curChord(){if(st.focus==='seq'&&st.seq[st.pos])return st.seq[st.pos].name;if(st.focus==='chord'&&st.uniq[st.chord])return st.uniq[st.chord];return null;}
 function updateKb(){
   const info=$('#kbinfo'),kb=$('#kb');if(!info)return;
@@ -675,24 +708,24 @@ function answer(l){
 
 function reqText(){
   const t=$('#r-title').value.trim(),a=$('#r-artist').value.trim();
-  return `Piyano Defteri şarkı isteği\nŞarkı: ${t}\nSanatçı: ${a||'-'}\nAkorlarını internetten bul; söz yazmadan, bölüm bölüm şu biçimde ver. Şarkı telifsizse sağ el melodisini de ekle (nota+oktav:vuruş, dörtlük = 1 vuruş, R:1 = sus, | = ölçü çizgisi):\n#PIYANO\nŞarkı: …\nSanatçı: …\nTon: …\nKaynak: …\nMelodi: E4 E4 F4 G4:2 | …\n[Bölüm adı]\nD Bm | G A Bm`;
+  return `Piyano Defteri şarkı isteği\nŞarkı: ${t}\nSanatçı: ${a||'-'}\nAkorlarını internetten bul; söz yazmadan, bölüm bölüm şu biçimde ver. Şarkı telifsizse sağ el melodisini (nota+oktav:vuruş, dörtlük = 1 vuruş, R:1 = sus, | = ölçü çizgisi), sözlerini (akor, basılacağı hecenin önünde köşeli parantezde) ve melodi hecelerini (her notaya bir hece, _ = uzatma) de ekle. Telifli şarkıda söz ve melodi yazma:\n#PIYANO\nŞarkı: …\nSanatçı: …\nTon: …\nKaynak: …\nMelodi: C4 C4 G4 G4 | A4 A4 G4:2 | …\nHece: Twin- kle twin- kle lit- tle star …\n[Bölüm adı]\n[C]Twin-kle twin-kle [F]lit-tle [C]star\nD Bm | G A Bm`;
 }
 function updateReq(){$('#r-wa').href='https://wa.me/?text='+encodeURIComponent(reqText());}
-function seqText(s){return s.sections.length?s.sections.map(x=>'['+x.n+']\n'+x.c.split('|').map(t=>t.trim()).filter(Boolean).join('\n')).join('\n'):s.chords.join(' ');}
+function seqText(s){return s.sections.length?s.sections.map(x=>'['+x.n+']\n'+(x.ly||x.c.split('|').map(t=>t.trim()).filter(Boolean)).join('\n')).join('\n'):s.chords.join(' ');}
 function updateLinks(){
   const q=($('#f-title').value+' '+$('#f-artist').value).trim();
   $('#q-g').href='https://www.google.com/search?q='+encodeURIComponent((q||'piano')+' chords');
   $('#q-u').href='https://www.ultimate-guitar.com/search.php?search_type=title&value='+encodeURIComponent(q);
 }
 function updateCprev(){
-  const list=[...new Set(String($('#f-seq').value).split('\n').filter(l=>!/^\s*\[.*\]\s*$/.test(l)).flatMap(tokens))];
+  const list=[...new Set(String($('#f-seq').value).split('\n').map(l=>l.trim()).filter(l=>l&&!/^\[[^\]]*\]$/.test(l)).flatMap(l=>isCP(l)?cpChords(l):(chordLine(l)?tokens(l):[])))];
   $('#c-prev').innerHTML=list.map(c=>`<span class="${parseChord(c)?'':'bad'}">${esc(c)}</span>`).join('');
   const bad=list.filter(c=>!parseChord(c));const e=$('#e-chords');e.hidden=!bad.length;e.textContent=bad.length?'Tanınmayan akor: '+bad.join(', ')+'. Örnek yazım: F#m, Bb, G7, Cmaj7, G/B.':'';
 }
 function fillForm(s){
   st.edit=s?s.id:null;$('#f-head').textContent=s?'Şarkıyı düzenle: '+s.title:'Elle ekle veya düzenle';$('#f-cancel').hidden=!s;
   $('#f-title').value=s?s.title:'';$('#f-artist').value=s?s.artist:'';$('#f-key').value=s?s.key:'';$('#f-src').value=s?s.src:'';
-  $('#f-seq').value=s?seqText(s):'';$('#f-mel').value=s?s.melody:'';$('#f-notes').value=s?s.notes:'';
+  $('#f-seq').value=s?seqText(s):'';$('#f-mel').value=s?s.melody:'';$('#f-syl').value=s?(s.syl||''):'';$('#f-notes').value=s?s.notes:'';
   ['#e-title','#e-mel'].forEach(k=>{$(k).hidden=true;});updateCprev();updateLinks();
   if(s)$('#manual').open=true;
 }
@@ -704,7 +737,7 @@ function saveForm(){
   const lines=$('#f-seq').value.split('\n').map(l=>l.trim()).filter(Boolean);
   const sections=parseSections(lines.map(l=>/^\[.*\]$/.test(l)?l:l),[]);
   const old=st.edit?getSong(st.edit):null;
-  const o=clean({id:st.edit||newId(),title,artist:$('#f-artist').value.trim(),key:$('#f-key').value.trim(),src:$('#f-src').value.trim(),sections,melody:mel,notes:$('#f-notes').value.trim(),level:old?old.level:'bas',easy:old?old.easy:true});
+  const o=clean({id:st.edit||newId(),title,artist:$('#f-artist').value.trim(),key:$('#f-key').value.trim(),src:$('#f-src').value.trim(),sections,melody:mel,syl:$('#f-syl').value.trim(),notes:$('#f-notes').value.trim(),level:old?old.level:'bas',easy:old?old.easy:true});
   if(!o.sections.length&&!o.melody&&lines.length){const e=$('#e-chords');e.hidden=false;e.textContent='Akor satırı okunamadı. Örnek: D Bm | G A';return;}
   const i=DB.songs.findIndex(s=>s.id===o.id);if(i>=0)DB.songs[i]=o;else DB.songs.unshift(o);
   save();st.edit=null;$('#manual').open=false;openSong(o.id);
@@ -787,6 +820,7 @@ document.addEventListener('change',e=>{
   if(e.target.id==='easy'){const s=getSong(st.song);if(s){s.easy=e.target.checked;save();stopPlay();renderSong();const n=curChord();if(n)playName(n,s.level);}}
 });
 $('#sform').addEventListener('submit',e=>{e.preventDefault();saveForm();});
+['touchend','click'].forEach(ev=>document.addEventListener(ev,()=>ac(),{once:true,capture:true}));
 window.addEventListener('hashchange',()=>{const t=location.hash.slice(1);if(SUB[t]&&t!==st.tab)setTab(t);});
 
 load();
