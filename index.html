@@ -376,7 +376,8 @@ function noteG(it,i,x,by,cur,names){
   s+=`<ellipse class="${it.b>=2?'hh':'hf'}" cx="${x}" cy="${y}" rx="6.2" ry="4.4" transform="rotate(-20 ${x} ${y})"/>`;
   if(it.b<4){const up=p<4;
     s+=up?`<line class="stm" x1="${x+5.6}" x2="${x+5.6}" y1="${y-1}" y2="${y-32}"/>`:`<line class="stm" x1="${x-5.6}" x2="${x-5.6}" y1="${y+1}" y2="${y+32}"/>`;
-    if(it.b<1)s+=up?`<path class="fl" d="M${x+5.6} ${y-32} q9 7 6 17"/>`:`<path class="fl" d="M${x-5.6} ${y+32} q9 -7 6 -17"/>`;}
+    if(it.b<1)s+=up?`<path class="fl" d="M${x+5.6} ${y-32} q9 7 6 17"/>`:`<path class="fl" d="M${x-5.6} ${y+32} q9 -7 6 -17"/>`;
+    if(it.b<0.5)s+=up?`<path class="fl" d="M${x+5.6} ${y-25} q9 7 6 17"/>`:`<path class="fl" d="M${x-5.6} ${y+25} q9 -7 6 -17"/>`;}
   if([1.5,3,0.75].includes(it.b))s+=`<circle class="dt" cx="${x+10}" cy="${y+(p%2===0?-3:0)}" r="1.9"/>`;
   if(it.a)s+=`<text class="ac" x="${x-19}" y="${y+5}">${accSym(it.a)}</text>`;
   if(names)s+=`<text class="nn" x="${x}" y="${by+46}" text-anchor="middle">${it.l}${accSym(it.a)}</text><text class="nn2" x="${x}" y="${by+61}" text-anchor="middle">${SOL[it.l]}</text>`;
@@ -657,7 +658,7 @@ function answer(l){
 
 function reqText(){
   const t=$('#r-title').value.trim(),a=$('#r-artist').value.trim();
-  return `Piyano Defteri şarkı isteği\nŞarkı: ${t}\nSanatçı: ${a||'-'}\nAkorlarını internetten bul; söz yazmadan, bölüm bölüm şu biçimde ver:\n#PIYANO\nŞarkı: …\nSanatçı: …\nTon: …\nKaynak: …\n[Bölüm adı]\nD Bm | G A Bm`;
+  return `Piyano Defteri şarkı isteği\nŞarkı: ${t}\nSanatçı: ${a||'-'}\nAkorlarını internetten bul; söz yazmadan, bölüm bölüm şu biçimde ver. Şarkı telifsizse sağ el melodisini de ekle (nota+oktav:vuruş, dörtlük = 1 vuruş, R:1 = sus, | = ölçü çizgisi):\n#PIYANO\nŞarkı: …\nSanatçı: …\nTon: …\nKaynak: …\nMelodi: E4 E4 F4 G4:2 | …\n[Bölüm adı]\nD Bm | G A Bm`;
 }
 function updateReq(){$('#r-wa').href='https://wa.me/?text='+encodeURIComponent(reqText());}
 function seqText(s){return s.sections.length?s.sections.map(x=>'['+x.n+']\n'+x.c.split('|').map(t=>t.trim()).filter(Boolean).join('\n')).join('\n'):s.chords.join(' ');}
